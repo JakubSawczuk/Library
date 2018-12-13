@@ -10,11 +10,12 @@ import wat.ai.models.Reader;
 import javax.persistence.EntityManager;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Logger;
+
 
 @Service
 public class ReaderServiceImpl implements IReaderService {
-
-    private final static String allActiveUsersQuery = "SELECT r FROM Reader r WHERE r.isActive = true";
+    private static final Logger LOGGER = Logger.getLogger(ReaderServiceImpl.class.getName());
 
     @Autowired
     private EntityManager entityManager;
@@ -22,7 +23,8 @@ public class ReaderServiceImpl implements IReaderService {
     @Override
     public List<ReaderBasicInfo> getAllAtciveUsers() {
         List<ReaderBasicInfo> readerBasicInfoList = new ArrayList<>();
-        List<Reader> readerList = (List<Reader>) entityManager.createQuery(allActiveUsersQuery).getResultList();
+        List<Reader> readerList = (List<Reader>) entityManager.createQuery("SELECT r FROM Reader r WHERE r.isActive = true")
+                                                                .getResultList();
         ModelMapper modelMapper = new ModelMapper();
 
         readerList.forEach(reader -> {
