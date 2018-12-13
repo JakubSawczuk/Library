@@ -1,10 +1,5 @@
-package wat.ai.models;
+package wat.ai.controllers.users;
 
-import org.springframework.stereotype.Component;
-
-import javax.persistence.Column;
-
-@Component
 public class UserDTO {
 
     private String firstName;

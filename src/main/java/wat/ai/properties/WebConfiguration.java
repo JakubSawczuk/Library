@@ -6,12 +6,8 @@ import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 import org.springframework.web.filter.CorsFilter;
 
-import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
-import javax.persistence.Persistence;
-
 @Component
-public class Configuration {
+public class WebConfiguration {
     @Bean
     public CorsFilter corsFilter() {
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
@@ -26,13 +22,5 @@ public class Configuration {
         config.addAllowedMethod("DELETE");
         source.registerCorsConfiguration("/**", config);
         return new CorsFilter(source);
-    }
-
-    @Bean
-    public EntityManager entityManager(){
-         EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory("biblioteka");
-         EntityManager entityManager = entityManagerFactory.createEntityManager();
-        System.out.println("create entityManager");
-         return entityManager;
     }
 }
