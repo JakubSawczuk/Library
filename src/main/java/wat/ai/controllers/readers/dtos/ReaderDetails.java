@@ -2,7 +2,7 @@ package wat.ai.controllers.readers.dtos;
 
 import java.util.Date;
 
-public class ReaderDetalis {
+public class ReaderDetails {
 
     private int readerId;
     private String cardNumber;

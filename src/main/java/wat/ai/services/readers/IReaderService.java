@@ -1,13 +1,15 @@
 package wat.ai.services.readers;
 
 import wat.ai.controllers.readers.dtos.ReaderBasicInfo;
-import wat.ai.controllers.readers.dtos.ReaderDetalis;
+import wat.ai.controllers.readers.dtos.ReaderDetails;
 
 import java.util.List;
 
 public interface IReaderService {
 
-    List<ReaderBasicInfo> getAllAtciveUsers();
+    List<ReaderBasicInfo> getAllActiveUsers();
 
-    ReaderDetalis getUserDetails(int readerId);
+    ReaderDetails getReaderDetails(int readerId);
+
+    ReaderDetails updateReader(ReaderDetails readerDetails);
 }
