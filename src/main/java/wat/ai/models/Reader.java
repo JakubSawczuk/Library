@@ -1,11 +1,13 @@
 package wat.ai.models;
 
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
 import java.util.Date;
 
 @Entity
-@Table(name = "uzytkownik")
-public class User {
+public class Reader {
 
     @Column(name = "READER_ID")
     @GeneratedValue

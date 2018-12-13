@@ -12,8 +12,8 @@ public class DatabaseConnector {
     @Bean
     public EntityManager entityManager(){
         EntityManager entityManager = null;
+        EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory("library");
         try {
-            EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory("biblioteka");
             entityManager = entityManagerFactory.createEntityManager();
             System.out.println("Create entityManager");
         }catch (Exception e){
