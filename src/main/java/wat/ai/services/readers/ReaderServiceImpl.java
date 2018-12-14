@@ -15,7 +15,7 @@ import java.util.logging.Logger;
 
 @Service
 public class ReaderServiceImpl implements IReaderService {
-    private static final Logger LOGGER = Logger.getLogger(ReaderServiceImpl.class.getName());
+    static final Logger LOGGER = Logger.getLogger(ReaderServiceImpl.class.getName());
 
     @Autowired
     private EntityManager entityManager;
@@ -23,7 +23,7 @@ public class ReaderServiceImpl implements IReaderService {
     @Override
     public List<ReaderBasicInfo> getAllActiveUsers() {
         List<ReaderBasicInfo> readerBasicInfoList = new ArrayList<>();
-        List<Reader> readerList = (List<Reader>) entityManager.createQuery("SELECT r FROM Reader r WHERE r.isActive = true")
+        List<Reader> readerList = (List<Reader>) entityManager.createQuery("SELECT r FROM READER r WHERE r.isActive = true")
                                                                 .getResultList();
         ModelMapper modelMapper = new ModelMapper();
 
@@ -37,14 +37,13 @@ public class ReaderServiceImpl implements IReaderService {
 
     @Override
     public ReaderDetails getReaderDetails(int readerId) {
-        Reader reader = (Reader) entityManager.createQuery("SELECT r from Reader r where r.readerId = :pReaderId")
+        Reader reader = (Reader) entityManager.createQuery("SELECT r from READER r where r.readerId = :pReaderId")
                                                 .setParameter("pReaderId", readerId)
                                                 .getSingleResult();
 
         ModelMapper modelMapper = new ModelMapper();
-        ReaderDetails readerDetails = modelMapper.map(reader, ReaderDetails.class);
 
-        return readerDetails;
+        return modelMapper.map(reader, ReaderDetails.class);
     }
 
     @Override
@@ -57,7 +56,9 @@ public class ReaderServiceImpl implements IReaderService {
         afterUpdateReader.setActive(beforeUpdateReader.isActive());
         afterUpdateReader.setPasswordHash(beforeUpdateReader.getPasswordHash());
 
+        entityManager.getTransaction().begin();
         entityManager.merge(afterUpdateReader);
+        entityManager.getTransaction().commit();
         return readerDetails;
     }
 

@@ -1,4 +1,4 @@
 package wat.ai.controllers;
 
-public class k {
+public class BooksController {
 }

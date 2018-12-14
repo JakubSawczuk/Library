@@ -17,9 +17,6 @@ public class ReaderController {
     @Autowired
     ReaderServiceImpl readerService;
 
-    public ReaderController() {
-    }
-
     @GetMapping
     public ResponseEntity<List<ReaderBasicInfo>> shareAllActiveReader() {
         List<ReaderBasicInfo> readerBasicInfoList = readerService.getAllActiveUsers();

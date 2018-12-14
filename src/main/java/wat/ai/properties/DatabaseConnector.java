@@ -23,6 +23,7 @@ public class DatabaseConnector {
         }catch (Exception e){
             LOGGER.log(Level.SEVERE, e.toString(), e);
         }
+
         return entityManager;
     }
 }
