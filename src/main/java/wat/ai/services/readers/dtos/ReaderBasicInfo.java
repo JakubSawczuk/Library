@@ -1,4 +1,4 @@
-package wat.ai.controllers.readers.dtos;
+package wat.ai.services.readers.dtos;
 
 public class ReaderBasicInfo {
 

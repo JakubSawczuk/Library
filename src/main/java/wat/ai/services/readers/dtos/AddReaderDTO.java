@@ -1,11 +1,11 @@
-package wat.ai.controllers.readers.dtos;
+package wat.ai.services.readers.dtos;
 
 import java.util.Date;
 
-public class ReaderDetails {
+public class AddReaderDTO {
 
-    private int readerId;
     private String cardNumber;
+    private String password;
     private String firstName;
     private String lastName;
     private String pesel;
@@ -17,20 +17,20 @@ public class ReaderDetails {
     private String streetNumber;
     private String flatNumber;
 
-    public int getReaderId() {
-        return readerId;
-    }
-
-    public void setReaderId(int readerId) {
-        this.readerId = readerId;
-    }
-
     public String getCardNumber() {
         return cardNumber;
     }
 
     public void setCardNumber(String cardNumber) {
         this.cardNumber = cardNumber;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
     }
 
     public String getFirstName() {

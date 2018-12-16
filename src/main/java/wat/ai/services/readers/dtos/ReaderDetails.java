@@ -1,57 +1,21 @@
-package wat.ai.models;
+package wat.ai.services.readers.dtos;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
 import java.util.Date;
 
-@Entity(name = "READER")
-public class Reader {
+public class ReaderDetails {
 
-    @Column(name = "READER_ID")
-    @GeneratedValue
-    @Id
     private int readerId;
-
-    @Column(name = "CARD_NUMBER", unique = true, length = 9)
     private String cardNumber;
-
-    @Column(name = "PASSWORD_HASH", length = 4000)
-    private String passwordHash;
-
-    @Column(name = "FIRST_NAME")
     private String firstName;
-
-    @Column(name = "LAST_NAME")
     private String lastName;
-
-    @Column(name = "PESEL", length = 11)
     private String pesel;
-
-    @Column(name = "BIRTHDAY")
     private Date birthday;
-
-    @Column(name = "PHONE")
     private String phone;
-
-    @Column(name = "EMAIL")
     private String email;
-
-    @Column(name = "CITY")
     private String city;
-
-    @Column(name = "STREET")
     private String street;
-
-    @Column(name = "STREET_NUMBER")
     private String streetNumber;
-
-    @Column(name = "FLAT_NUMBER")
     private String flatNumber;
-
-    @Column(name = "IS_ACTIVE")
-    private boolean isActive;
 
     public int getReaderId() {
         return readerId;
@@ -67,14 +31,6 @@ public class Reader {
 
     public void setCardNumber(String cardNumber) {
         this.cardNumber = cardNumber;
-    }
-
-    public String getPasswordHash() {
-        return passwordHash;
-    }
-
-    public void setPasswordHash(String passwordHash) {
-        this.passwordHash = passwordHash;
     }
 
     public String getFirstName() {
@@ -155,13 +111,5 @@ public class Reader {
 
     public void setFlatNumber(String flatNumber) {
         this.flatNumber = flatNumber;
-    }
-
-    public boolean isActive() {
-        return isActive;
-    }
-
-    public void setActive(boolean active) {
-        isActive = active;
     }
 }

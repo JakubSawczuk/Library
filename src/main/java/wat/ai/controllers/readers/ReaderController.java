@@ -4,15 +4,19 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import wat.ai.controllers.readers.dtos.ReaderBasicInfo;
-import wat.ai.controllers.readers.dtos.ReaderDetails;
 import wat.ai.services.readers.ReaderServiceImpl;
+import wat.ai.services.readers.dtos.AddReaderDTO;
+import wat.ai.services.readers.dtos.ReaderBasicInfo;
+import wat.ai.services.readers.dtos.ReaderDetails;
 
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 @RestController
 @RequestMapping("/api/readers")
 public class ReaderController {
+    private static final Logger LOGGER = Logger.getLogger(ReaderController.class.getName());
 
     @Autowired
     ReaderServiceImpl readerService;
@@ -24,7 +28,7 @@ public class ReaderController {
     }
 
     @GetMapping(value = "/{id}")
-    public ResponseEntity<ReaderDetails> shareDetalisReader(
+    public ResponseEntity<ReaderDetails> shareDetailsReader(
             @PathVariable("id") int readerId
     ) {
         ReaderDetails readerDetails = readerService.getReaderDetails(readerId);
@@ -32,10 +36,36 @@ public class ReaderController {
     }
 
     @PutMapping
-    public ResponseEntity<ReaderDetails> updateReader(@RequestBody ReaderDetails readerDetails) {
-        readerService.updateReader(readerDetails);
+    public ResponseEntity updateReader(@RequestBody ReaderDetails readerDetails) {
+        try {
+            readerService.updateReader(readerDetails);
+        }catch (Exception e){
+            LOGGER.log(Level.SEVERE, e.toString(), e);
+            return new ResponseEntity<>(HttpStatus.NOT_MODIFIED);
+        }
         return new ResponseEntity<>(readerDetails, HttpStatus.OK);
     }
 
+    @DeleteMapping
+    public ResponseEntity deleteReader(@RequestBody ReaderDetails readerDetails) {
+        try {
+            readerService.deleteReader(readerDetails);
+        }catch (Exception e){
+            LOGGER.log(Level.SEVERE, e.toString(), e);
+            return new ResponseEntity<>(HttpStatus.NOT_MODIFIED);
+        }
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    @PostMapping
+    public ResponseEntity createReader(@RequestBody AddReaderDTO addReaderDTO) {
+        try {
+            readerService.addReader(addReaderDTO);
+        }catch (Exception e){
+            LOGGER.log(Level.SEVERE, e.toString(), e);
+            return new ResponseEntity<>(HttpStatus.NOT_MODIFIED);
+        }
+        return new ResponseEntity<>(HttpStatus.CREATED);
+    }
 
 }

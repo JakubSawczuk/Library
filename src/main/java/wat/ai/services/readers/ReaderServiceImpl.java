@@ -1,15 +1,20 @@
 package wat.ai.services.readers;
 
+import org.hibernate.exception.ConstraintViolationException;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import wat.ai.controllers.readers.dtos.ReaderBasicInfo;
-import wat.ai.controllers.readers.dtos.ReaderDetails;
 import wat.ai.models.Reader;
+import wat.ai.repositories.ReaderRepository;
+import wat.ai.services.readers.dtos.AddReaderDTO;
+import wat.ai.services.readers.dtos.ReaderBasicInfo;
+import wat.ai.services.readers.dtos.ReaderDetails;
 
-import javax.persistence.EntityManager;
+import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
+import java.util.Base64;
 import java.util.List;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 
 
@@ -17,17 +22,39 @@ import java.util.logging.Logger;
 public class ReaderServiceImpl implements IReaderService {
     static final Logger LOGGER = Logger.getLogger(ReaderServiceImpl.class.getName());
 
+    private final ReaderRepository readerRepository;
+
     @Autowired
-    private EntityManager entityManager;
+    public ReaderServiceImpl(ReaderRepository readerRepository) {
+        this.readerRepository = readerRepository;
+    }
+
+    public void save(){
+        Reader reader = new Reader();
+        reader.setCardNumber("PFS1001");
+        reader.setFirstName("Jakub");
+        reader.setLastName("Sawczuk");
+        reader.setActive(true);
+
+        Reader reader2 = new Reader();
+        reader2.setCardNumber("PFS1002");
+        reader2.setFirstName("Kamil");
+        reader2.setLastName("Rybicki");
+        reader2.setActive(true);
+
+        readerRepository.save(reader);
+        readerRepository.save(reader2);
+    }
+
 
     @Override
     public List<ReaderBasicInfo> getAllActiveUsers() {
-        List<ReaderBasicInfo> readerBasicInfoList = new ArrayList<>();
-        List<Reader> readerList = (List<Reader>) entityManager.createQuery("SELECT r FROM READER r WHERE r.isActive = true")
-                                                                .getResultList();
         ModelMapper modelMapper = new ModelMapper();
+        List<Reader> activeReaderList = (List<Reader>) readerRepository.findByIsActive(true);
 
-        readerList.forEach(reader -> {
+        List<ReaderBasicInfo> readerBasicInfoList = new ArrayList<>();
+
+        activeReaderList.forEach(reader -> {
             ReaderBasicInfo readerBasicInfo = modelMapper.map(reader, ReaderBasicInfo.class);
             readerBasicInfoList.add(readerBasicInfo);
         });
@@ -37,10 +64,7 @@ public class ReaderServiceImpl implements IReaderService {
 
     @Override
     public ReaderDetails getReaderDetails(int readerId) {
-        Reader reader = (Reader) entityManager.createQuery("SELECT r from READER r where r.readerId = :pReaderId")
-                                                .setParameter("pReaderId", readerId)
-                                                .getSingleResult();
-
+        Reader reader = readerRepository.findByReaderId(readerId);
         ModelMapper modelMapper = new ModelMapper();
 
         return modelMapper.map(reader, ReaderDetails.class);
@@ -48,19 +72,54 @@ public class ReaderServiceImpl implements IReaderService {
 
     @Override
     public ReaderDetails updateReader(ReaderDetails readerDetails) {
+            ModelMapper modelMapper = new ModelMapper();
+
+            Reader readerBeforeUpdate = readerRepository.findByReaderId(readerDetails.getReaderId());
+            Reader readerAfterUpdate = modelMapper.map(readerDetails, Reader.class);
+
+            readerAfterUpdate.setActive(readerBeforeUpdate.isActive());
+            readerAfterUpdate.setPasswordHash(readerBeforeUpdate.getPasswordHash());
+
+            try {
+                readerRepository.save(readerAfterUpdate);
+            }catch (ConstraintViolationException e){
+                LOGGER.log(Level.SEVERE, e.toString(), e);
+            }
+            return readerDetails;
+    }
+
+    @Override
+    public ReaderDetails deleteReader(ReaderDetails readerDetails) {
         ModelMapper modelMapper = new ModelMapper();
 
-        Reader beforeUpdateReader = entityManager.find(Reader.class, readerDetails.getReaderId());
-        Reader afterUpdateReader = modelMapper.map(readerDetails, Reader.class);
+        Reader readerBeforeUpdate = readerRepository.findByCardNumber(readerDetails.getCardNumber());
+        Reader readerAfterUpdate = modelMapper.map(readerDetails, Reader.class);
 
-        afterUpdateReader.setActive(beforeUpdateReader.isActive());
-        afterUpdateReader.setPasswordHash(beforeUpdateReader.getPasswordHash());
+        readerAfterUpdate.setActive(false);
+        readerAfterUpdate.setPasswordHash(readerBeforeUpdate.getPasswordHash());
 
-        entityManager.getTransaction().begin();
-        entityManager.merge(afterUpdateReader);
-        entityManager.getTransaction().commit();
+        try {
+            readerRepository.save(readerAfterUpdate);
+        }catch (Exception e){
+            LOGGER.log(Level.SEVERE, e.toString(), e);
+        }
         return readerDetails;
     }
 
+    @Override
+    public Reader addReader(AddReaderDTO theAddReaderDTO) {
+        ModelMapper modelMapper = new ModelMapper();
+        Reader reader = modelMapper.map(theAddReaderDTO, Reader.class);
 
+        try {
+            reader.setPasswordHash(Base64.getEncoder().encodeToString(theAddReaderDTO.getPassword().getBytes("UTF-8")));
+            reader.setActive(false);
+        } catch (UnsupportedEncodingException e) {
+            LOGGER.log(Level.SEVERE, e.toString(), e);
+        }
+
+        readerRepository.save(reader);
+
+        return reader;
+    }
 }
