@@ -92,7 +92,7 @@ public class ReaderServiceImpl implements IReaderService {
     public ReaderDetails deleteReader(ReaderDetails readerDetails) {
         ModelMapper modelMapper = new ModelMapper();
 
-        Reader readerBeforeUpdate = readerRepository.findByCardNumber(readerDetails.getCardNumber());
+        Reader readerBeforeUpdate = readerRepository.findByReaderId(readerDetails.getReaderId());
         Reader readerAfterUpdate = modelMapper.map(readerDetails, Reader.class);
 
         readerAfterUpdate.setActive(false);
@@ -114,12 +114,12 @@ public class ReaderServiceImpl implements IReaderService {
         try {
             reader.setPasswordHash(Base64.getEncoder().encodeToString(theAddReaderDTO.getPassword().getBytes("UTF-8")));
             reader.setActive(false);
+            readerRepository.save(reader);
         } catch (UnsupportedEncodingException e) {
             LOGGER.log(Level.SEVERE, e.toString(), e);
+        }catch (ConstraintViolationException ex){
+            LOGGER.log(Level.SEVERE, ex.toString(), ex);
         }
-
-        readerRepository.save(reader);
-
         return reader;
     }
 }

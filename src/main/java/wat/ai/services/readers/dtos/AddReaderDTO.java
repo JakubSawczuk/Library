@@ -4,6 +4,7 @@ import java.util.Date;
 
 public class AddReaderDTO {
 
+    private int readerId;
     private String cardNumber;
     private String password;
     private String firstName;
@@ -111,5 +112,13 @@ public class AddReaderDTO {
 
     public void setFlatNumber(String flatNumber) {
         this.flatNumber = flatNumber;
+    }
+
+    public int getReaderId() {
+        return readerId;
+    }
+
+    public void setReaderId(int readerId) {
+        this.readerId = readerId;
     }
 }

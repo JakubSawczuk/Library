@@ -6,7 +6,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import java.util.Date;
 
-@Entity(name = "LIBRARIAN_ID")
+@Entity(name = "LIBRARIAN")
 public class Librarian {
 
     @GeneratedValue

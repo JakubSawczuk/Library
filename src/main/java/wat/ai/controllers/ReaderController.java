@@ -1,4 +1,4 @@
-package wat.ai.controllers.readers;
+package wat.ai.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
