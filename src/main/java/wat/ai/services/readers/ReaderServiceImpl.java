@@ -50,7 +50,7 @@ public class ReaderServiceImpl implements IReaderService {
     @Override
     public List<ReaderBasicInfo> getAllActiveUsers() {
         ModelMapper modelMapper = new ModelMapper();
-        List<Reader> activeReaderList = (List<Reader>) readerRepository.findByIsActive(true);
+        List<Reader> activeReaderList = readerRepository.findByIsActive(true);
 
         List<ReaderBasicInfo> readerBasicInfoList = new ArrayList<>();
 
@@ -113,7 +113,7 @@ public class ReaderServiceImpl implements IReaderService {
 
         try {
             reader.setPasswordHash(Base64.getEncoder().encodeToString(theAddReaderDTO.getPassword().getBytes("UTF-8")));
-            reader.setActive(false);
+            reader.setActive(true);
             readerRepository.save(reader);
         } catch (UnsupportedEncodingException e) {
             LOGGER.log(Level.SEVERE, e.toString(), e);

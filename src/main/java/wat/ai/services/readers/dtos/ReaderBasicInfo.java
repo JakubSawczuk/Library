@@ -2,19 +2,19 @@ package wat.ai.services.readers.dtos;
 
 public class ReaderBasicInfo {
 
-    private int idReader;
+    private int readerId;
     private String firstName;
     private String lastName;
     private String cardNumber;
     private String phone;
     private String email;
 
-    public int getIdReader() {
-        return idReader;
+    public int getReaderId() {
+        return readerId;
     }
 
-    public void setIdReader(int idReader) {
-        this.idReader = idReader;
+    public void setReaderId(int readerId) {
+        this.readerId = readerId;
     }
 
     public String getFirstName() {

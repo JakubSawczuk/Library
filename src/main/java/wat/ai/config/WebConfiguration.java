@@ -1,4 +1,4 @@
-package wat.ai.properties;
+package wat.ai.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Component;

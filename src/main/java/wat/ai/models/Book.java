@@ -27,7 +27,7 @@ public class Book {
     private String description;
 
     @Column(name = "EDITION_NUMBER", unique = true)
-    private int editionNumber;
+    private String editionNumber;
 
     @Column(name = "EDITION_DATE")
     private Date editionDate;
@@ -40,6 +40,9 @@ public class Book {
 
     @Column(name = "PUBLISHER_NAME")
     private String publisherName;
+
+    @Column(name = "IS_ACTIVE")
+    private boolean isActive;
 
     public int getBookId() {
         return bookId;
@@ -81,11 +84,11 @@ public class Book {
         this.description = description;
     }
 
-    public int getEditionNumber() {
+    public String getEditionNumber() {
         return editionNumber;
     }
 
-    public void setEditionNumber(int editionNumber) {
+    public void setEditionNumber(String editionNumber) {
         this.editionNumber = editionNumber;
     }
 
@@ -119,5 +122,13 @@ public class Book {
 
     public void setPublisherName(String publisherName) {
         this.publisherName = publisherName;
+    }
+
+    public boolean isActive() {
+        return isActive;
+    }
+
+    public void setActive(boolean active) {
+        isActive = active;
     }
 }
