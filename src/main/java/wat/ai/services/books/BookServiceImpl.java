@@ -102,22 +102,26 @@ public class BookServiceImpl implements IBookService {
         List<BookDetails> bookDetailsList = new ArrayList<>();
 
         bookNLList.forEach(bookNL -> {
-            ModelMapper modelMapper = new ModelMapper();
-
-            modelMapper.createTypeMap(BookNL.class, BookDetails.class).addMappings(mapper -> {
-                if(bookNL.getLanguage().equals("polski")) mapper.map(BookNL::getTitle, BookDetails::setTitlePL);
-                else if(bookNL.getLanguage().equals("angielski")) mapper.map(BookNL::getTitle, BookDetails::setTitleEn);
-                mapper.map(BookNL::getGenre, BookDetails::setGenreName);
-                mapper.map(BookNL::getPlaceOfPublication, BookDetails::setEditionPlace);
-            });
-            BookDetails bookDetails = modelMapper.map(bookNL, BookDetails.class);
-            bookDetails.setEditionDate(new Date(Integer.valueOf(bookNL.getPublicationYear()), 1,1));
-            bookDetails.setActive(true);
-            bookDetailsList.add(bookDetails);
+            bookDetailsList.add(bookNLToBookDetails(bookNL));
 
         });
         return bookDetailsList;
     }
 
+    private BookDetails bookNLToBookDetails(BookNL bookNL){
+        ModelMapper modelMapper = new ModelMapper();
+
+        modelMapper.createTypeMap(BookNL.class, BookDetails.class).addMappings(mapper -> {
+            if(bookNL.getLanguage().equals("polski")) mapper.map(BookNL::getTitle, BookDetails::setTitlePL);
+            else if(bookNL.getLanguage().equals("angielski")) mapper.map(BookNL::getTitle, BookDetails::setTitleEn);
+            mapper.map(BookNL::getGenre, BookDetails::setGenreName);
+            mapper.map(BookNL::getPlaceOfPublication, BookDetails::setEditionPlace);
+        });
+        BookDetails bookDetails = modelMapper.map(bookNL, BookDetails.class);
+        bookDetails.setEditionDate(new Date(Integer.valueOf(bookNL.getPublicationYear()), 1,1));
+        bookDetails.setActive(true);
+
+        return bookDetails;
+    }
 
 }
