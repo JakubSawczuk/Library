@@ -18,24 +18,39 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 @Component
-public class JSONParser {
+public class BooksFromApi {
     private static final String API_PATH = "https://data.bn.org.pl/api/bibs.json?";
-    private static final Logger LOGGER = Logger.getLogger(JSONParser.class.getName());
+    private static final Logger LOGGER = Logger.getLogger(BooksFromApi.class.getName());
 
-    private JsonArray getArrayJsonFromLink(String path) {
+    List<BookNL> booksFromApiNL;
+    Gson gson = new Gson();
+
+    private void getArrayJsonFromLink(String path) {
         String sURL = path;
         URL url;
         HttpURLConnection requestHTTP;
         try {
+            LOGGER.severe("GET: " + path);
             url = new URL(sURL);
             requestHTTP = (HttpURLConnection) url.openConnection();
             requestHTTP.connect();
             JsonParser jsonParser = new JsonParser();
             JsonElement jsonElement = jsonParser.parse(new InputStreamReader((InputStream) requestHTTP.getContent()));
-            return jsonElement.getAsJsonObject().get("bibs").getAsJsonArray();
+            parseJsonToObject(jsonElement.getAsJsonObject().get("bibs").getAsJsonArray());
+
+            String nextPage = jsonElement.getAsJsonObject().get("nextPage").getAsString();
+            geyArraysFromNextPage(nextPage);
+
         } catch (Exception e) {
             LOGGER.log(Level.SEVERE, e.toString(), e);
-            return null;
+        }
+    }
+
+    private void geyArraysFromNextPage(String nextPage){
+        if(nextPage.isEmpty()){
+            return;
+        }else{
+            getArrayJsonFromLink(nextPage);
         }
     }
 
@@ -50,9 +65,6 @@ public class JSONParser {
     }
 
     public List<BookNL> parseJsonToObject(JsonArray jsonArray){
-        List<BookNL> booksFromApiNL = new ArrayList<>();
-        Gson gson = new Gson();
-
         jsonArray.forEach(jsonElement -> {
             BookNL bookNL = gson.fromJson(jsonElement.toString(), BookNL.class);
             booksFromApiNL.add(bookNL);
@@ -61,11 +73,13 @@ public class JSONParser {
         return booksFromApiNL;
     }
 
-    public List<BookNL> getBooksFromApi(HashMap hashMap){
-        String pathRequest = buildRequest(hashMap);
-        JsonArray jsonArray = getArrayJsonFromLink(pathRequest);
 
-        return parseJsonToObject(jsonArray);
+    public List<BookNL> getBooksFromApi(HashMap hashMap){
+        booksFromApiNL = new ArrayList<>();
+        String pathRequest = buildRequest(hashMap);
+        getArrayJsonFromLink(pathRequest);
+
+        return booksFromApiNL;
     }
 
 }

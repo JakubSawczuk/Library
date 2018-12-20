@@ -5,7 +5,7 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import wat.ai.models.Book;
-import wat.ai.nationalelibrary.JSONParser;
+import wat.ai.nationalelibrary.BooksFromApi;
 import wat.ai.repositories.BookRepository;
 import wat.ai.services.books.dtos.BookBasicInfo;
 import wat.ai.services.books.dtos.BookDetails;
@@ -29,7 +29,7 @@ public class BookServiceImpl implements IBookService {
     }
 
     @Autowired
-    JSONParser jsonParser;
+    BooksFromApi booksFromApi;
 
     @Override
     public List<BookBasicInfo> getAllBooks() {
@@ -98,13 +98,12 @@ public class BookServiceImpl implements IBookService {
         for (int i = 0; i < requestParamArray.length; i+=2) {
             requestParamMap.put(requestParamArray[i], requestParamArray[i+1]);
         }
-        List<BookNL> bookNLList = jsonParser.getBooksFromApi(requestParamMap);
+        List<BookNL> bookNLList = booksFromApi.getBooksFromApi(requestParamMap);
         List<BookDetails> bookDetailsList = new ArrayList<>();
 
-        bookNLList.forEach(bookNL -> {
-            bookDetailsList.add(bookNLToBookDetails(bookNL));
-
-        });
+        bookNLList.forEach(bookNL ->
+            bookDetailsList.add(bookNLToBookDetails(bookNL))
+        );
         return bookDetailsList;
     }
 

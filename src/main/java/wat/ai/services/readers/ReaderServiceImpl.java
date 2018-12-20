@@ -115,10 +115,8 @@ public class ReaderServiceImpl implements IReaderService {
             reader.setPasswordHash(Base64.getEncoder().encodeToString(theAddReaderDTO.getPassword().getBytes("UTF-8")));
             reader.setActive(true);
             readerRepository.save(reader);
-        } catch (UnsupportedEncodingException e) {
+        } catch (UnsupportedEncodingException | ConstraintViolationException e) {
             LOGGER.log(Level.SEVERE, e.toString(), e);
-        }catch (ConstraintViolationException ex){
-            LOGGER.log(Level.SEVERE, ex.toString(), ex);
         }
         return reader;
     }
