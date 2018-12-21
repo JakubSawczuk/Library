@@ -4,7 +4,7 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import java.util.Date;
+import java.sql.Date;
 
 @Entity(name = "BOOK")
 public class Book {
@@ -16,6 +16,9 @@ public class Book {
 
     @Column(name = "ISBN", length = 13, unique = true)
     private String isbn;
+
+    @Column(name = "AUTHOR")
+    private String author;
 
     @Column(name = "TITLE_EN")
     private String titleEn;
@@ -130,5 +133,13 @@ public class Book {
 
     public void setActive(boolean active) {
         isActive = active;
+    }
+
+    public String getAuthor() {
+        return author;
+    }
+
+    public void setAuthor(String author) {
+        this.author = author;
     }
 }

@@ -26,6 +26,10 @@ public class BookCopy {
     @JoinColumn(name = "BOOK_ID")
     private Book book;
 
+    public void setBookId(int bookId){
+        book.setBookId(bookId);
+    }
+
     public int getBookCopyId() {
         return bookCopyId;
     }

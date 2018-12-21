@@ -64,13 +64,12 @@ public class BooksFromApi {
         return fullPathRequest.toString();
     }
 
-    public List<BookNL> parseJsonToObject(JsonArray jsonArray){
+    public void parseJsonToObject(JsonArray jsonArray){
         jsonArray.forEach(jsonElement -> {
             BookNL bookNL = gson.fromJson(jsonElement.toString(), BookNL.class);
             booksFromApiNL.add(bookNL);
         });
 
-        return booksFromApiNL;
     }
 
 

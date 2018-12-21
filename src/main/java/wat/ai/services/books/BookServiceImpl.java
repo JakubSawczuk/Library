@@ -11,8 +11,9 @@ import wat.ai.services.books.dtos.BookBasicInfo;
 import wat.ai.services.books.dtos.BookDetails;
 import wat.ai.services.books.dtos.BookNL;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.logging.Level;
@@ -116,9 +117,14 @@ public class BookServiceImpl implements IBookService {
             mapper.map(BookNL::getGenre, BookDetails::setGenreName);
             mapper.map(BookNL::getPlaceOfPublication, BookDetails::setEditionPlace);
         });
+
         BookDetails bookDetails = modelMapper.map(bookNL, BookDetails.class);
-        bookDetails.setEditionDate(new Date(Integer.valueOf(bookNL.getPublicationYear()), 1,1));
-        bookDetails.setActive(true);
+        try {
+            bookDetails.setActive(true);
+            bookDetails.setEditionDate( new SimpleDateFormat("DD-MM-YYYY").parse("01-01-"+bookNL.getPublicationYear()));
+        } catch (ParseException e) {
+            LOGGER.log(Level.SEVERE, e.toString(), e);
+        }
 
         return bookDetails;
     }

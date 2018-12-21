@@ -1,11 +1,10 @@
 package wat.ai.models;
 
 import javax.persistence.Column;
-import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 
-@Entity(name = "AUTHOR")
+//@Entity(name = "AUTHOR")
 public class Author {
 
     @GeneratedValue

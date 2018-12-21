@@ -14,8 +14,8 @@ import java.util.logging.Logger;
 
 @RestController
 @RequestMapping("/api/books")
-public class BooksController {
-    private static final Logger LOGGER = Logger.getLogger(BooksController.class.getName());
+public class BookController {
+    private static final Logger LOGGER = Logger.getLogger(BookController.class.getName());
 
     @Autowired
     BookServiceImpl bookService;
@@ -27,7 +27,7 @@ public class BooksController {
     }
 
     @GetMapping(value = "/{id}")
-    public ResponseEntity<BookDetails> shareDetailsReader(
+    public ResponseEntity<BookDetails> shareDetailsBook(
             @PathVariable("id") int bookId
     ) {
         BookDetails bookDetails = bookService.getBookDetails(bookId);
@@ -38,7 +38,7 @@ public class BooksController {
     public ResponseEntity createBook(@RequestBody BookDetails bookDetails) {
         try {
             bookService.addBook(bookDetails);
-        }catch (Exception e){
+        } catch (Exception e) {
             LOGGER.log(Level.SEVERE, e.toString(), e);
             return new ResponseEntity<>(HttpStatus.NOT_MODIFIED);
         }
@@ -49,7 +49,7 @@ public class BooksController {
     public ResponseEntity updateBook(@RequestBody BookDetails bookDetails) {
         try {
             bookService.updateBook(bookDetails);
-        }catch (Exception e){
+        } catch (Exception e) {
             LOGGER.log(Level.SEVERE, e.toString(), e);
             return new ResponseEntity<>(HttpStatus.NOT_MODIFIED);
         }
@@ -60,7 +60,7 @@ public class BooksController {
     public ResponseEntity deleteBook(@RequestBody BookDetails bookDetails) {
         try {
             bookService.deleteBook(bookDetails);
-        }catch (Exception e){
+        } catch (Exception e) {
             LOGGER.log(Level.SEVERE, e.toString(), e);
             return new ResponseEntity<>(HttpStatus.NOT_MODIFIED);
         }
@@ -69,10 +69,10 @@ public class BooksController {
 
     @GetMapping(value = "/bn")
     public ResponseEntity<List<BookDetails>> getFromBN(
-            @RequestParam(value = "title",required = false) String titleParam,
-            @RequestParam(value = "author",required = false) String authorParam,
-            @RequestParam(value = "isbnIssn",required = false) String isbnParam
-    ){
+            @RequestParam(value = "title", required = false) String titleParam,
+            @RequestParam(value = "author", required = false) String authorParam,
+            @RequestParam(value = "isbnIssn", required = false) String isbnParam
+    ) {
         List<BookDetails> bookDetailsList = bookService.getBooksFromLN("title", titleParam, "author", authorParam, "isbnIssn", isbnParam);
         return new ResponseEntity<>(bookDetailsList, HttpStatus.OK);
     }

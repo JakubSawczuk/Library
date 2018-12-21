@@ -4,6 +4,7 @@ import java.util.Date;
 
 public class BookBasicInfo {
     private int bookId;
+    private String author;
     private String titleEn;
     private String titlePL;
     private String description;
@@ -83,5 +84,13 @@ public class BookBasicInfo {
 
     public void setPublisherName(String publisherName) {
         this.publisherName = publisherName;
+    }
+
+    public String getAuthor() {
+        return author;
+    }
+
+    public void setAuthor(String author) {
+        this.author = author;
     }
 }

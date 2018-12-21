@@ -1,10 +1,11 @@
 package wat.ai.services.books.dtos;
-
 import java.util.Date;
+
 
 public class BookDetails {
     private int bookId;
     private String isbn;
+    private String author;
     private String titleEn;
     private String titlePL;
     private String description;
@@ -101,5 +102,13 @@ public class BookDetails {
 
     public void setPublisherName(String publisherName) {
         this.publisherName = publisherName;
+    }
+
+    public String getAuthor() {
+        return author;
+    }
+
+    public void setAuthor(String author) {
+        this.author = author;
     }
 }
