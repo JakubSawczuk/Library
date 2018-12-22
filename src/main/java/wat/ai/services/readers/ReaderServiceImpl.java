@@ -10,7 +10,6 @@ import wat.ai.services.readers.dtos.AddReaderDTO;
 import wat.ai.services.readers.dtos.ReaderBasicInfo;
 import wat.ai.services.readers.dtos.ReaderDetails;
 
-import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.Base64;
 import java.util.List;
@@ -112,10 +111,10 @@ public class ReaderServiceImpl implements IReaderService {
         Reader reader = modelMapper.map(theAddReaderDTO, Reader.class);
 
         try {
-            reader.setPasswordHash(Base64.getEncoder().encodeToString(theAddReaderDTO.getPassword().getBytes("UTF-8")));
+            reader.setPasswordHash(Base64.getEncoder().encodeToString(theAddReaderDTO.getPassword().getBytes()));
             reader.setActive(true);
             readerRepository.save(reader);
-        } catch (UnsupportedEncodingException | ConstraintViolationException e) {
+        } catch (ConstraintViolationException e) {
             LOGGER.log(Level.SEVERE, e.toString(), e);
         }
         return reader;

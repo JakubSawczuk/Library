@@ -39,7 +39,7 @@ public class BookCopyImpl implements IBookCopy {
 
     @Override
     public void addBookCopy(BookCopyDTO bookCopyDTO) {
-        BookCopy bookCopy = addOrUpdate(bookCopyDTO, "add");
+        BookCopy bookCopy = addOrUpdateOrDelete(bookCopyDTO, "add");
         bookCopyRepository.save(bookCopy);
     }
 
@@ -58,17 +58,17 @@ public class BookCopyImpl implements IBookCopy {
 
     @Override
     public void updateBookCopy(BookCopyDTO bookCopyDTO) {
-        BookCopy bookCopy = addOrUpdate(bookCopyDTO, "update");
+        BookCopy bookCopy = addOrUpdateOrDelete(bookCopyDTO, "update");
         bookCopyRepository.save(bookCopy);
     }
 
     @Override
     public void deleteBookCopy(BookCopyDTO bookCopyDTO) {
-        BookCopy bookCopy = addOrUpdate(bookCopyDTO, "delete");
+        BookCopy bookCopy = addOrUpdateOrDelete(bookCopyDTO, "delete");
         bookCopyRepository.save(bookCopy);
     }
 
-    public BookCopy addOrUpdate(BookCopyDTO bookCopyDTO, String operation){
+    public BookCopy addOrUpdateOrDelete(BookCopyDTO bookCopyDTO, String operation){
         ModelMapper modelMapper = new ModelMapper();
         BookCopy bookCopy = modelMapper.map(bookCopyDTO, BookCopy.class);
         bookCopy.setAvailable(true);
