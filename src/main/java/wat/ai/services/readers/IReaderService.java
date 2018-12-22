@@ -15,7 +15,7 @@ public interface IReaderService {
 
     ReaderDetails updateReader(ReaderDetails readerDetails);
 
-    ReaderDetails deleteReader(ReaderDetails readerDetails);
+    void deleteReader(int readerId);
 
     Reader addReader(AddReaderDTO addReaderDTO);
 }

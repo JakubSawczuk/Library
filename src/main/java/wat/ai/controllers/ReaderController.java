@@ -46,10 +46,12 @@ public class ReaderController {
         return new ResponseEntity<>(readerDetails, HttpStatus.OK);
     }
 
-    @DeleteMapping
-    public ResponseEntity deleteReader(@RequestBody ReaderDetails readerDetails) {
+    @DeleteMapping(value = "/{id}")
+    public ResponseEntity deleteReader(
+            @PathVariable("id") int readerId
+    ) {
         try {
-            readerService.deleteReader(readerDetails);
+            readerService.deleteReader(readerId);
         }catch (Exception e){
             LOGGER.log(Level.SEVERE, e.toString(), e);
             return new ResponseEntity<>(HttpStatus.NOT_MODIFIED);

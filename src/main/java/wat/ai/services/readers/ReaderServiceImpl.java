@@ -88,21 +88,15 @@ public class ReaderServiceImpl implements IReaderService {
     }
 
     @Override
-    public ReaderDetails deleteReader(ReaderDetails readerDetails) {
-        ModelMapper modelMapper = new ModelMapper();
-
-        Reader readerBeforeUpdate = readerRepository.findByReaderId(readerDetails.getReaderId());
-        Reader readerAfterUpdate = modelMapper.map(readerDetails, Reader.class);
-
-        readerAfterUpdate.setActive(false);
-        readerAfterUpdate.setPasswordHash(readerBeforeUpdate.getPasswordHash());
+    public void deleteReader(int readerId) {
+        Reader reader = readerRepository.findByReaderId(readerId);
+        reader.setActive(false);
 
         try {
-            readerRepository.save(readerAfterUpdate);
+            readerRepository.save(reader);
         }catch (Exception e){
             LOGGER.log(Level.SEVERE, e.toString(), e);
         }
-        return readerDetails;
     }
 
     @Override
