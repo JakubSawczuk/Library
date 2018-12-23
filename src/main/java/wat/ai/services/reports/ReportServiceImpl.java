@@ -6,7 +6,7 @@ import net.sf.jasperreports.engine.JasperPrint;
 import net.sf.jasperreports.engine.JasperReport;
 import net.sf.jasperreports.engine.util.JRLoader;
 import org.springframework.stereotype.Service;
-import wat.ai.config.MySQLConnection;
+import wat.ai.config.DatabaseConnection;
 
 import javax.servlet.http.HttpServletResponse;
 import java.io.InputStream;
@@ -22,12 +22,12 @@ public class ReportServiceImpl implements IReportService {
     static final Logger LOGGER = Logger.getLogger(ReportServiceImpl.class.getName());
 
     @Override
-    public void generateRaport(HttpServletResponse response) {
+    public void generateReport(HttpServletResponse response) {
         try {
             InputStream jasperStream = this.getClass().getResourceAsStream("/jasper/Simple_Blue.jasper");
             Map<String, Object> params = fillMapParams();
             JasperReport jasperReport = (JasperReport) JRLoader.loadObject(jasperStream);
-            Connection connection = MySQLConnection.getMySQLConnection();
+            Connection connection = DatabaseConnection.getMySQLConnection();
 
             JasperPrint jasperPrint = JasperFillManager.fillReport(jasperReport, params, connection);
 

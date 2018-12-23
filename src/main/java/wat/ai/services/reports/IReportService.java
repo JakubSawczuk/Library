@@ -4,5 +4,5 @@ import javax.servlet.http.HttpServletResponse;
 
 public interface IReportService {
 
-    void generateRaport(HttpServletResponse response);
+    void generateReport(HttpServletResponse response);
 }

@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 import wat.ai.models.Book;
 import wat.ai.nationalelibrary.BooksFromApi;
 import wat.ai.repositories.BookRepository;
+import wat.ai.services.bookloans.Mail;
 import wat.ai.services.books.dtos.BookBasicInfo;
 import wat.ai.services.books.dtos.BookDetails;
 import wat.ai.services.books.dtos.BookNL;
@@ -42,6 +43,13 @@ public class BookServiceImpl implements IBookService {
             BookBasicInfo bookBasicInfo = modelMapper.map(book, BookBasicInfo.class);
             booksBasicInfoList.add(bookBasicInfo);
         });
+
+        Mail mail = new Mail();
+        try {
+           // mail.sentMail("micrus1236@gmail.com", "TestMaila", "TestTresci");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
         return booksBasicInfoList;
     }
@@ -93,27 +101,27 @@ public class BookServiceImpl implements IBookService {
     }
 
     @Override
-    public List<BookDetails> getBooksFromLN(String ... requestParamArray) {
+    public List<BookDetails> getBooksFromLN(String... requestParamArray) {
         HashMap<String, String> requestParamMap = new HashMap();
 
-        for (int i = 0; i < requestParamArray.length; i+=2) {
-            requestParamMap.put(requestParamArray[i], requestParamArray[i+1]);
+        for (int i = 0; i < requestParamArray.length; i += 2) {
+            requestParamMap.put(requestParamArray[i], requestParamArray[i + 1]);
         }
         List<BookNL> bookNLList = booksFromApi.getBooksFromApi(requestParamMap);
         List<BookDetails> bookDetailsList = new ArrayList<>();
 
         bookNLList.forEach(bookNL ->
-            bookDetailsList.add(bookNLToBookDetails(bookNL))
+                bookDetailsList.add(bookNLToBookDetails(bookNL))
         );
         return bookDetailsList;
     }
 
-    private BookDetails bookNLToBookDetails(BookNL bookNL){
+    private BookDetails bookNLToBookDetails(BookNL bookNL) {
         ModelMapper modelMapper = new ModelMapper();
 
         modelMapper.createTypeMap(BookNL.class, BookDetails.class).addMappings(mapper -> {
-            if(bookNL.getLanguage().equals("polski")) mapper.map(BookNL::getTitle, BookDetails::setTitlePL);
-            else if(bookNL.getLanguage().equals("angielski")) mapper.map(BookNL::getTitle, BookDetails::setTitleEn);
+            if (bookNL.getLanguage().equals("polski")) mapper.map(BookNL::getTitle, BookDetails::setTitlePL);
+            else if (bookNL.getLanguage().equals("angielski")) mapper.map(BookNL::getTitle, BookDetails::setTitleEn);
             mapper.map(BookNL::getGenre, BookDetails::setGenreName);
             mapper.map(BookNL::getPlaceOfPublication, BookDetails::setEditionPlace);
         });
@@ -121,7 +129,7 @@ public class BookServiceImpl implements IBookService {
         BookDetails bookDetails = modelMapper.map(bookNL, BookDetails.class);
         try {
             bookDetails.setActive(true);
-            bookDetails.setEditionDate( new SimpleDateFormat("DD-MM-YYYY").parse("01-01-"+bookNL.getPublicationYear()));
+            bookDetails.setEditionDate(new SimpleDateFormat("DD-MM-YYYY").parse("01-01-" + bookNL.getPublicationYear()));
         } catch (ParseException e) {
             LOGGER.log(Level.SEVERE, e.toString(), e);
         }

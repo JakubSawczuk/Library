@@ -19,9 +19,13 @@ public class ReportController {
 
     @GetMapping
     @ResponseBody
-    public ResponseEntity generateRaport(HttpServletResponse response){
-        reportService.generateRaport(response);
-        return new ResponseEntity(HttpStatus.OK);
+    public ResponseEntity generateReport(HttpServletResponse response){
+        try {
+            reportService.generateReport(response);
+            return new ResponseEntity(HttpStatus.OK);
+        }catch (Exception e){
+            return new ResponseEntity(HttpStatus.NOT_FOUND);
+        }
     }
 
 }
