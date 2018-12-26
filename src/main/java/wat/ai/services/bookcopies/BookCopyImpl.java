@@ -21,20 +21,7 @@ public class BookCopyImpl implements IBookCopy {
     }
 
     public List<BookCopyDTO> getAllBookCopies() {
-        List<BookCopy> activeBookCopyList = bookCopyRepository.findByIsAvailable(true);
-        List<BookCopyDTO> bookCopyDTOList = new ArrayList<>();
-
-        activeBookCopyList.forEach(bookCopies -> {
-            BookCopyDTO bookCopyDTO = new BookCopyDTO();
-            bookCopyDTO.setBookCopyId(bookCopies.getBookCopyId());
-            bookCopyDTO.setBookId(bookCopies.getBook().getBookId());
-            bookCopyDTO.setCopyNumber(bookCopies.getCopyNumber());
-            bookCopyDTO.setDescription(bookCopies.getDescription());
-            bookCopyDTO.setLocation(bookCopies.getLocation());
-
-            bookCopyDTOList.add(bookCopyDTO);
-        });
-
+        List<BookCopyDTO> bookCopyDTOList = getBookCopies(false, null);
         return bookCopyDTOList;
     }
 
@@ -45,16 +32,10 @@ public class BookCopyImpl implements IBookCopy {
     }
 
     @Override
-    public BookCopyDTO getBookCopyDetails(int bookCopyId) {
-        BookCopy bookCopy = bookCopyRepository.findByBookCopyId(bookCopyId);
+    public List<BookCopyDTO> getBookCopyDetails(int bookId) {
+        List<BookCopyDTO> bookCopyDTOList = getBookCopies(true, bookId);
 
-        BookCopyDTO bookCopyDTO = new BookCopyDTO();
-        bookCopyDTO.setBookId(bookCopy.getBook().getBookId());
-        bookCopyDTO.setCopyNumber(bookCopy.getCopyNumber());
-        bookCopyDTO.setDescription(bookCopy.getDescription());
-        bookCopyDTO.setLocation(bookCopy.getLocation());
-
-        return bookCopyDTO;
+        return bookCopyDTOList;
     }
 
     @Override
@@ -69,15 +50,39 @@ public class BookCopyImpl implements IBookCopy {
         bookCopyRepository.save(bookCopy);
     }
 
-    public BookCopy addOrUpdateOrDelete(BookCopyDTO bookCopyDTO, String operation){
+    public BookCopy addOrUpdateOrDelete(BookCopyDTO bookCopyDTO, String operation) {
         ModelMapper modelMapper = new ModelMapper();
         BookCopy bookCopy = modelMapper.map(bookCopyDTO, BookCopy.class);
         bookCopy.setAvailable(true);
-        if(operation.equals("add")){
+        if (operation.equals("add")) {
             bookCopy.setBookCopyId(0);
         } else if (operation.equals("delete")) {
             bookCopy.setAvailable(false);
         }
         return bookCopy;
+    }
+
+    public List<BookCopyDTO> getBookCopies(boolean isDetails, Integer bookId) {
+        List<BookCopyDTO> bookCopyDTOList = new ArrayList<>();
+        List<BookCopy> bookCopies;
+
+        if (isDetails) {
+            bookCopies = bookCopyRepository.findByBookId(bookId);
+        } else {
+            bookCopies = bookCopyRepository.findByIsAvailable(true);
+        }
+
+        bookCopies.forEach(bookCopy -> {
+            BookCopyDTO bookCopyDTO = new BookCopyDTO();
+            bookCopyDTO.setBookCopyId(bookCopy.getBookCopyId());
+            bookCopyDTO.setBookId(bookCopy.getBook().getBookId());
+            bookCopyDTO.setCopyNumber(bookCopy.getCopyNumber());
+            bookCopyDTO.setDescription(bookCopy.getDescription());
+            bookCopyDTO.setLocation(bookCopy.getLocation());
+
+            bookCopyDTOList.add(bookCopyDTO);
+        });
+
+        return bookCopyDTOList;
     }
 }

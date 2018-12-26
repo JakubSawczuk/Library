@@ -29,7 +29,7 @@ public class Book {
     @Column(name = "DESCRIPTION", length = 4000)
     private String description;
 
-    @Column(name = "EDITION_NUMBER", unique = true)
+    @Column(name = "EDITION_NUMBER")
     private String editionNumber;
 
     @Column(name = "EDITION_DATE")
