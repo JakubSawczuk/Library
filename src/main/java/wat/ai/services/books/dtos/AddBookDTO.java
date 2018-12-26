@@ -2,7 +2,8 @@ package wat.ai.services.books.dtos;
 
 import java.util.Date;
 
-public class BookBasicInfo {
+public class AddBookDTO {
+
     private int bookId;
     private String isbn;
     private String author;
@@ -14,6 +15,7 @@ public class BookBasicInfo {
     private String editionPlace;
     private String genreName;
     private String publisherName;
+    private boolean isActive = true;
 
     public int getBookId() {
         return bookId;
@@ -21,6 +23,22 @@ public class BookBasicInfo {
 
     public void setBookId(int bookId) {
         this.bookId = bookId;
+    }
+
+    public String getIsbn() {
+        return isbn;
+    }
+
+    public void setIsbn(String isbn) {
+        this.isbn = isbn;
+    }
+
+    public String getAuthor() {
+        return author;
+    }
+
+    public void setAuthor(String author) {
+        this.author = author;
     }
 
     public String getTitleEn() {
@@ -87,19 +105,11 @@ public class BookBasicInfo {
         this.publisherName = publisherName;
     }
 
-    public String getAuthor() {
-        return author;
+    public boolean isActive() {
+        return isActive;
     }
 
-    public void setAuthor(String author) {
-        this.author = author;
-    }
-
-    public String getIsbn() {
-        return isbn;
-    }
-
-    public void setIsbn(String isbn) {
-        this.isbn = isbn;
+    public void setActive(boolean active) {
+        isActive = active;
     }
 }

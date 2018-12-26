@@ -14,15 +14,6 @@ public class BookDetails {
     private String editionPlace;
     private String genreName;
     private String publisherName;
-    private boolean isActive;
-
-    public boolean isActive() {
-        return isActive;
-    }
-
-    public void setActive(boolean active) {
-        isActive = active;
-    }
 
     public  int getBookId() {
         return bookId;

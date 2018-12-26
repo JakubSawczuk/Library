@@ -26,6 +26,7 @@ public class BookCopyImpl implements IBookCopy {
 
         activeBookCopyList.forEach(bookCopies -> {
             BookCopyDTO bookCopyDTO = new BookCopyDTO();
+            bookCopyDTO.setBookCopyId(bookCopies.getBookCopyId());
             bookCopyDTO.setBookId(bookCopies.getBook().getBookId());
             bookCopyDTO.setCopyNumber(bookCopies.getCopyNumber());
             bookCopyDTO.setDescription(bookCopies.getDescription());

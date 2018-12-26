@@ -30,12 +30,13 @@ public class BooksFromApi {
         URL url;
         HttpURLConnection requestHTTP;
         try {
-            LOGGER.severe("GET: " + path);
+            LOGGER.log(Level.INFO, "GET: " + path);
             url = new URL(sURL);
             requestHTTP = (HttpURLConnection) url.openConnection();
+            requestHTTP.setRequestProperty("Content-Type", "application/x-www-form-urlencoded; charset=utf-8");
             requestHTTP.connect();
             JsonParser jsonParser = new JsonParser();
-            JsonElement jsonElement = jsonParser.parse(new InputStreamReader((InputStream) requestHTTP.getContent()));
+            JsonElement jsonElement = jsonParser.parse(new InputStreamReader((InputStream) requestHTTP.getContent(), "UTF-8"));
             parseJsonToObject(jsonElement.getAsJsonObject().get("bibs").getAsJsonArray());
 
             String nextPage = jsonElement.getAsJsonObject().get("nextPage").getAsString();

@@ -8,6 +8,7 @@ import wat.ai.models.Book;
 import wat.ai.nationalelibrary.BooksFromApi;
 import wat.ai.repositories.BookRepository;
 import wat.ai.services.bookloans.Mail;
+import wat.ai.services.books.dtos.AddBookDTO;
 import wat.ai.services.books.dtos.BookBasicInfo;
 import wat.ai.services.books.dtos.BookDetails;
 import wat.ai.services.books.dtos.BookNL;
@@ -63,10 +64,9 @@ public class BookServiceImpl implements IBookService {
     }
 
     @Override
-    public Book addBook(BookDetails theBookDetails) {
+    public Book addBook(AddBookDTO addBookDTO) {
         ModelMapper modelMapper = new ModelMapper();
-        Book book = modelMapper.map(theBookDetails, Book.class);
-
+        Book book = modelMapper.map(addBookDTO, Book.class);
         try {
             bookRepository.save(book);
         } catch (ConstraintViolationException e) {
@@ -119,6 +119,9 @@ public class BookServiceImpl implements IBookService {
     private BookDetails bookNLToBookDetails(BookNL bookNL) {
         ModelMapper modelMapper = new ModelMapper();
 
+        bookNL.setAuthor(bookNL.getAuthor().replaceAll("(,|())", ""));
+        bookNL.setAuthor(bookNL.getAuthor().replaceAll("\\s\\((.*?)\\)", ""));
+
         modelMapper.createTypeMap(BookNL.class, BookDetails.class).addMappings(mapper -> {
             if (bookNL.getLanguage().equals("polski")) mapper.map(BookNL::getTitle, BookDetails::setTitlePL);
             else if (bookNL.getLanguage().equals("angielski")) mapper.map(BookNL::getTitle, BookDetails::setTitleEn);
@@ -128,7 +131,6 @@ public class BookServiceImpl implements IBookService {
 
         BookDetails bookDetails = modelMapper.map(bookNL, BookDetails.class);
         try {
-            bookDetails.setActive(true);
             bookDetails.setEditionDate(new SimpleDateFormat("DD-MM-YYYY").parse("01-01-" + bookNL.getPublicationYear()));
         } catch (ParseException e) {
             LOGGER.log(Level.SEVERE, e.toString(), e);

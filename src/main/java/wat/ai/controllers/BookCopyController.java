@@ -12,7 +12,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 @RestController
-@RequestMapping("/api/bookcopy")
+@RequestMapping("/api/book-copies")
 public class BookCopyController {
     private static final Logger LOGGER = Logger.getLogger(BookCopyController.class.getName());
 

@@ -5,6 +5,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import wat.ai.services.books.BookServiceImpl;
+import wat.ai.services.books.dtos.AddBookDTO;
 import wat.ai.services.books.dtos.BookBasicInfo;
 import wat.ai.services.books.dtos.BookDetails;
 
@@ -35,9 +36,9 @@ public class BookController {
     }
 
     @PostMapping
-    public ResponseEntity createBook(@RequestBody BookDetails bookDetails) {
+    public ResponseEntity createBook(@RequestBody AddBookDTO addBookDTO) {
         try {
-            bookService.addBook(bookDetails);
+            bookService.addBook(addBookDTO);
         } catch (Exception e) {
             LOGGER.log(Level.SEVERE, e.toString(), e);
             return new ResponseEntity<>(HttpStatus.NOT_MODIFIED);

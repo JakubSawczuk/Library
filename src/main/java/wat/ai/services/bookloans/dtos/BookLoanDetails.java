@@ -1,59 +1,19 @@
-package wat.ai.models;
+package wat.ai.services.bookloans.dtos;
 
-import javax.persistence.*;
+import wat.ai.models.Librarian;
+import wat.ai.models.Reader;
+
 import java.sql.Timestamp;
 
-@Entity(name = "BOOK_LOANS")
-public class BookLoans {
+public class BookLoanDetails {
 
-    @Column(name = "BOOK_LOAN_ID")
-    @GeneratedValue
-    @Id
-    private int bookLoanId;
-
-    @Column(name = "LOAN_DATE")
     private Timestamp loanDate;
-
-    @Column(name = "PLANNED_DUE_DATE")
     private Timestamp plannedDueDate;
-
-    @Column(name = "ACUTAL_DUE_DATE")
     private Timestamp actualDueDate;
-
-    @Column(name = "STATUS")
     private String status;
-
-    @ManyToOne
-    @JoinColumn(name = "READER_ID")
     private Reader reader;
-
-    @ManyToOne
-    @JoinColumn(name = "LIBRARIAN_ID")
     private Librarian librarian;
-
-    @ManyToOne
-    @JoinColumn(name = "BOOK_COPY_ID")
-    private BookCopy bookCopy;
-
-    public void setReaderId(int readerId){
-        reader.setReaderId(readerId);
-    }
-
-    public void setLibrarianId(int librarianId){
-        librarian.setLibrarianId(librarianId);
-    }
-
-    public void setBookCopyId(int bookCopyId){
-        bookCopy.setBookCopyId(bookCopyId);
-    }
-
-    public int getBookLoanId() {
-        return bookLoanId;
-    }
-
-    public void setBookLoanId(int bookLoanId) {
-        this.bookLoanId = bookLoanId;
-    }
+    private int bookId;
 
     public Timestamp getLoanDate() {
         return loanDate;
@@ -103,11 +63,11 @@ public class BookLoans {
         this.librarian = librarian;
     }
 
-    public BookCopy getBookCopy() {
-        return bookCopy;
+    public int getBookId() {
+        return bookId;
     }
 
-    public void setBookCopy(BookCopy bookCopy) {
-        this.bookCopy = bookCopy;
+    public void setBookId(int bookId) {
+        this.bookId = bookId;
     }
 }
