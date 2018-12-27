@@ -56,12 +56,12 @@ public class BookCopyImpl implements IBookCopy {
         ModelMapper modelMapper = new ModelMapper();
         BookCopy bookCopy = modelMapper.map(bookCopyDTO, BookCopy.class);
         bookCopy.setActive(true);
-        bookCopy.setAvailable(bookCopyDTO.isAvailable());
-        System.out.println(bookCopyDTO.isAvailable());
         if (operation.equals("add")) {
             bookCopy.setBookCopyId(0);
+            bookCopy.setAvailable(true);
         } else if (operation.equals("delete")) {
             bookCopy.setActive(false);
+            bookCopy.setAvailable(false);
         }
         return bookCopy;
     }
