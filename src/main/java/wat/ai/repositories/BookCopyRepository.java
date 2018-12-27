@@ -12,6 +12,8 @@ import java.util.List;
 public interface BookCopyRepository extends CrudRepository<BookCopy, Integer> {
     List<BookCopy> findByIsAvailable(boolean isAvailable);
 
-    @Query("SELECT bc FROM BOOK_COPY bc WHERE bc.book.bookId = :bookId")
+    List<BookCopy> findByBookCopyId(int bookCopyId);
+
+    @Query("SELECT bc FROM BOOK_COPY bc WHERE bc.book.bookId = :bookId and bc.isAvailable = true")
     List<BookCopy> findByBookId(@Param("bookId") Integer bookId);
 }

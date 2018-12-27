@@ -21,8 +21,7 @@ public class BookCopyImpl implements IBookCopy {
     }
 
     public List<BookCopyDTO> getAllBookCopies() {
-        List<BookCopyDTO> bookCopyDTOList = getBookCopies(false, null);
-        return bookCopyDTOList;
+        return getBookCopies("isAvailable", null, null);
     }
 
     @Override
@@ -32,10 +31,13 @@ public class BookCopyImpl implements IBookCopy {
     }
 
     @Override
-    public List<BookCopyDTO> getBookCopyDetails(int bookId) {
-        List<BookCopyDTO> bookCopyDTOList = getBookCopies(true, bookId);
+    public List<BookCopyDTO> getBookCopiesForBook(int bookId) {
+        return getBookCopies("bookId", bookId, null);
+    }
 
-        return bookCopyDTOList;
+    @Override
+    public List<BookCopyDTO> getBookCopyDetails(int bookCopyId) {
+        return getBookCopies("bookCopyId", null, bookCopyId);
     }
 
     @Override
@@ -53,23 +55,27 @@ public class BookCopyImpl implements IBookCopy {
     public BookCopy addOrUpdateOrDelete(BookCopyDTO bookCopyDTO, String operation) {
         ModelMapper modelMapper = new ModelMapper();
         BookCopy bookCopy = modelMapper.map(bookCopyDTO, BookCopy.class);
-        bookCopy.setAvailable(true);
+        bookCopy.setActive(true);
+        bookCopy.setAvailable(bookCopyDTO.isAvailable());
+        System.out.println(bookCopyDTO.isAvailable());
         if (operation.equals("add")) {
             bookCopy.setBookCopyId(0);
         } else if (operation.equals("delete")) {
-            bookCopy.setAvailable(false);
+            bookCopy.setActive(false);
         }
         return bookCopy;
     }
 
-    public List<BookCopyDTO> getBookCopies(boolean isDetails, Integer bookId) {
+    public List<BookCopyDTO> getBookCopies(String findBy, Integer bookId, Integer bookCopyId) {
         List<BookCopyDTO> bookCopyDTOList = new ArrayList<>();
-        List<BookCopy> bookCopies;
+        List<BookCopy> bookCopies = null;
 
-        if (isDetails) {
+        if (findBy.equals("bookId")) {
             bookCopies = bookCopyRepository.findByBookId(bookId);
-        } else {
+        } else if (findBy.equals("isAvailable")) {
             bookCopies = bookCopyRepository.findByIsAvailable(true);
+        } else if (findBy.equals("bookCopyId")) {
+            bookCopies = bookCopyRepository.findByBookCopyId(bookCopyId);
         }
 
         bookCopies.forEach(bookCopy -> {
@@ -79,7 +85,7 @@ public class BookCopyImpl implements IBookCopy {
             bookCopyDTO.setCopyNumber(bookCopy.getCopyNumber());
             bookCopyDTO.setDescription(bookCopy.getDescription());
             bookCopyDTO.setLocation(bookCopy.getLocation());
-
+            bookCopyDTO.setAvailable(bookCopy.isAvailable());
             bookCopyDTOList.add(bookCopyDTO);
         });
 

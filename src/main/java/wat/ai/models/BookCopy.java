@@ -19,8 +19,11 @@ public class BookCopy {
     @Column(name = "DESCRIPTION")
     private String description;
 
-    @Column(name = "IS_AVAIALBE")
+    @Column(name = "IS_AVAILABLE")
     private boolean isAvailable;
+
+    @Column(name = "IS_ACTIVE")
+    private boolean isActive;
 
     @ManyToOne
     @JoinColumn(name = "BOOK_ID")
@@ -76,5 +79,13 @@ public class BookCopy {
 
     public void setBook(Book book) {
         this.book = book;
+    }
+
+    public boolean isActive() {
+        return isActive;
+    }
+
+    public void setActive(boolean active) {
+        isActive = active;
     }
 }

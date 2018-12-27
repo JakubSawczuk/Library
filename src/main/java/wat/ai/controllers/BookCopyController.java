@@ -26,10 +26,19 @@ public class BookCopyController {
     }
 
     @GetMapping(value = "/{id}")
-    public ResponseEntity<List<BookCopyDTO>> shareDetailsBookCopy(
+    public ResponseEntity<List<BookCopyDTO>> shareBookCopiesForBook(
             @PathVariable("id") int bookId
     ) {
-        List<BookCopyDTO> bookCopyDTOList = bookCopyService.getBookCopyDetails(bookId);
+        List<BookCopyDTO> bookCopyDTOList = bookCopyService.getBookCopiesForBook(bookId);
+        return new ResponseEntity<>(bookCopyDTOList, HttpStatus.OK);
+    }
+
+    @GetMapping(value = "/{id}/{bookCopyId}")
+    public ResponseEntity<List<BookCopyDTO>> shareDetailsBookCopy(
+            @PathVariable("id") int bookId,
+            @PathVariable("bookCopyId") int bookCopyId
+    ) {
+        List<BookCopyDTO> bookCopyDTOList = bookCopyService.getBookCopyDetails(bookCopyId);
         return new ResponseEntity<>(bookCopyDTOList, HttpStatus.OK);
     }
 

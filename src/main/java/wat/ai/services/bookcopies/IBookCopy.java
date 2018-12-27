@@ -6,7 +6,8 @@ import java.util.List;
 
 public interface IBookCopy {
     void addBookCopy(BookCopyDTO bookCopyDTO);
-    List<BookCopyDTO> getBookCopyDetails(int bookId);
+    List<BookCopyDTO> getBookCopiesForBook(int bookId);
+    List<BookCopyDTO> getBookCopyDetails(int bookCopyId);
     void updateBookCopy(BookCopyDTO bookCopyDTO);
     void deleteBookCopy(BookCopyDTO bookCopyDTO);
 }

@@ -5,6 +5,7 @@ public class BookCopyDTO {
     private String copyNumber;
     private String location;
     private String description;
+    private boolean isAvailable;
     private int bookId;
 
     public String getCopyNumber() {
@@ -46,5 +47,13 @@ public class BookCopyDTO {
 
     public void setBookCopyId(int bookCopyId) {
         this.bookCopyId = bookCopyId;
+    }
+
+    public boolean isAvailable() {
+        return isAvailable;
+    }
+
+    public void setAvailable(boolean available) {
+        isAvailable = available;
     }
 }
