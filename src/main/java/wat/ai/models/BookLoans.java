@@ -35,15 +35,15 @@ public class BookLoans {
     @JoinColumn(name = "BOOK_COPY_ID")
     private BookCopy bookCopy;
 
-    public void setReaderId(int readerId){
+    public void setReaderId(int readerId) {
         reader.setReaderId(readerId);
     }
 
-    public void setLibrarianId(int librarianId){
+    public void setLibrarianId(int librarianId) {
         librarian.setLibrarianId(librarianId);
     }
 
-    public void setBookCopyId(int bookCopyId){
+    public void setBookCopyId(int bookCopyId) {
         bookCopy.setBookCopyId(bookCopyId);
     }
 

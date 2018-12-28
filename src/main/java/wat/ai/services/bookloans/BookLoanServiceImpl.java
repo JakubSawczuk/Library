@@ -18,7 +18,6 @@ import java.util.List;
 public class BookLoanServiceImpl implements IBookLoanService {
 
     private final BookLoansRepository bookLoansRepository;
-
     private final BookCopyRepository bookCopyRepository;
 
     @Autowired
@@ -45,14 +44,24 @@ public class BookLoanServiceImpl implements IBookLoanService {
         return getAllValuesFromArray(queryObjects);
     }
 
+    @Override
+    public void changeStatus(int bookLoanId) {
+        BookLoans bookLoans = bookLoansRepository.findByBookLoanId(bookLoanId);
+        bookLoans.setStatus("RETURNED");
+
+        bookLoansRepository.save(bookLoans);
+    }
+
     private List<BookLoanDetails> getAllValuesFromArray(List<Object[]> queryObjects){
         List<BookLoanDetails> bookLoanDetailsList = new ArrayList<>();
         for (Object[] o : queryObjects) {
             BookLoanDetails bookLoanDetails = new BookLoanDetails();
             bookLoanDetails.setBookLoanId((Integer) o[0]);
             bookLoanDetails.setCopyNumber((String) o[1]);
-            bookLoanDetails.setTitlePl((String) o[2]);
-            bookLoanDetails.setTitleEn((String) o[3]);
+            bookLoanDetails.setTitle((String) o[2]);
+            if((String) o[3] != null){
+                bookLoanDetails.setTitle((String) o[2] + " (" + (String) o[3] + ")");
+            }
             bookLoanDetails.setLoanDate((Date) o[4]);
             bookLoanDetails.setPlannedDueDate((Date) o[5]);
             bookLoanDetails.setActualDueDate((Date) o[6]);

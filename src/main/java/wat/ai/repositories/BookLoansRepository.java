@@ -17,4 +17,6 @@ public interface BookLoansRepository extends CrudRepository<BookLoans, Integer> 
     List<Object[]> findByReaderIdAndStatus(@Param("readerId") Integer readerId,
                                            @Param("status") String status
     );
+
+    BookLoans findByBookLoanId(int bookLoanId);
 }

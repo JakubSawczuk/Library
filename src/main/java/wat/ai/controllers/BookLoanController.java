@@ -45,4 +45,17 @@ public class BookLoanController {
         }
         return new ResponseEntity<>(bookLoanDetailsList,HttpStatus.OK);
     }
+
+    @PutMapping(value = "/{bookLoanId}")
+    public ResponseEntity changeStatus(
+            @PathVariable("bookLoanId") int bookLoanId
+    ) {
+        try {
+            bookLoanService.changeStatus(bookLoanId);
+        } catch (Exception e) {
+            LOGGER.log(Level.SEVERE, e.toString(), e);
+            return new ResponseEntity<>(HttpStatus.NOT_MODIFIED);
+        }
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
 }

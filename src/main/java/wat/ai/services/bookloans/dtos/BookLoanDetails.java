@@ -9,8 +9,7 @@ public class BookLoanDetails {
     private Date plannedDueDate;
     private Date actualDueDate;
     private String status;
-    private String titlePl;
-    private String titleEn;
+    private String title;
     private String copyNumber;
 
     public Date getLoanDate() {
@@ -53,20 +52,12 @@ public class BookLoanDetails {
         this.bookLoanId = bookLoanId;
     }
 
-    public String getTitlePl() {
-        return titlePl;
+    public String getTitle() {
+        return title;
     }
 
-    public void setTitlePl(String titlePl) {
-        this.titlePl = titlePl;
-    }
-
-    public String getTitleEn() {
-        return titleEn;
-    }
-
-    public void setTitleEn(String titleEn) {
-        this.titleEn = titleEn;
+    public void setTitle(String title) {
+        this.title = title;
     }
 
     public String getCopyNumber() {

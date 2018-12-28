@@ -129,7 +129,7 @@ public class BookServiceImpl implements IBookService {
         });
 
         BookDetails bookDetails = modelMapper.map(bookNL, BookDetails.class);
-        Date sqlDate = DateUtils.stringToDate("01-01"+bookNL.getPublicationYear());
+        Date sqlDate = DateUtils.stringToDate("01-01-"+bookNL.getPublicationYear());
         bookDetails.setEditionDate(sqlDate);
 
         return bookDetails;

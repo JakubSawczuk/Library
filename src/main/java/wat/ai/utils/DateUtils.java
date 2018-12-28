@@ -8,7 +8,7 @@ import java.util.logging.Logger;
 public class DateUtils {
     static final Logger LOGGER = Logger.getLogger(DateUtils.class.getName());
 
-    public static java.sql.Date stringToDate(String s){
+    public static java.sql.Date stringToDate(String s) {
         java.util.Date date = null;
         java.sql.Date sqlDate = null;
         try {
