@@ -89,16 +89,14 @@ public class BookServiceImpl implements IBookService {
     }
 
     @Override
-    public BookDetails deleteBook(BookDetails bookDetails) {
-        ModelMapper modelMapper = new ModelMapper();
-        Book book = modelMapper.map(bookDetails, Book.class);
+    public void deleteBook(int bookId) {
+        Book book = bookRepository.findByBookId(bookId);
         book.setActive(false);
         try {
             bookRepository.save(book);
         } catch (ConstraintViolationException e) {
             LOGGER.log(Level.SEVERE, e.toString(), e);
         }
-        return bookDetails;
     }
 
     @Override

@@ -57,10 +57,12 @@ public class BookController {
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
-    @DeleteMapping
-    public ResponseEntity deleteBook(@RequestBody BookDetails bookDetails) {
+    @DeleteMapping(value = "/{id}")
+    public ResponseEntity deleteBook(
+            @PathVariable("id") int bookId
+    ) {
         try {
-            bookService.deleteBook(bookDetails);
+            bookService.deleteBook(bookId);
         } catch (Exception e) {
             LOGGER.log(Level.SEVERE, e.toString(), e);
             return new ResponseEntity<>(HttpStatus.NOT_MODIFIED);

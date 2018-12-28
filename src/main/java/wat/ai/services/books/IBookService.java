@@ -14,6 +14,6 @@ public interface IBookService {
      List<BookBasicInfo> getAllBooks();
      BookDetails getBookDetails(int bookId);
      BookDetails updateBook(BookDetails bookDetails);
-     BookDetails deleteBook(BookDetails bookDetails);
+     void deleteBook(int bookId);
      List<BookDetails> getBooksFromLN(String[] requestParamArray);
 }
