@@ -36,8 +36,8 @@ public class BookCopyImpl implements IBookCopy {
     }
 
     @Override
-    public List<BookCopyDTO> getBookCopyDetails(int bookCopyId) {
-        return getBookCopies("bookCopyId", null, bookCopyId);
+    public BookCopyDTO getBookCopyDetails(int bookCopyId) {
+        return getBookCopies("bookCopyId", null, bookCopyId).get(0);
     }
 
     @Override

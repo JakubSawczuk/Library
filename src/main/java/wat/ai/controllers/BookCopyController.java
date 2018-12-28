@@ -34,12 +34,12 @@ public class BookCopyController {
     }
 
     @GetMapping(value = "/{id}/{bookCopyId}")
-    public ResponseEntity<List<BookCopyDTO>> shareDetailsBookCopy(
+    public ResponseEntity<BookCopyDTO> shareDetailsBookCopy(
             @PathVariable("id") int bookId,
             @PathVariable("bookCopyId") int bookCopyId
     ) {
-        List<BookCopyDTO> bookCopyDTOList = bookCopyService.getBookCopyDetails(bookCopyId);
-        return new ResponseEntity<>(bookCopyDTOList, HttpStatus.OK);
+        BookCopyDTO bookCopyDTO = bookCopyService.getBookCopyDetails(bookCopyId);
+        return new ResponseEntity<>(bookCopyDTO, HttpStatus.OK);
     }
 
     @PostMapping
