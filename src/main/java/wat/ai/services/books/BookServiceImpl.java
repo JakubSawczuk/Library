@@ -79,6 +79,7 @@ public class BookServiceImpl implements IBookService {
     public BookDetails updateBook(BookDetails bookDetails) {
         ModelMapper modelMapper = new ModelMapper();
         Book book = modelMapper.map(bookDetails, Book.class);
+        book.setActive(true);
         try {
             bookRepository.save(book);
         } catch (ConstraintViolationException e) {

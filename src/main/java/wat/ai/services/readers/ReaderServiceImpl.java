@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 import wat.ai.models.Reader;
 import wat.ai.repositories.ReaderRepository;
 import wat.ai.services.readers.dtos.AddReaderDTO;
+import wat.ai.services.readers.dtos.BookLoansReaderInfo;
 import wat.ai.services.readers.dtos.ReaderBasicInfo;
 import wat.ai.services.readers.dtos.ReaderDetails;
 
@@ -27,24 +28,6 @@ public class ReaderServiceImpl implements IReaderService {
     public ReaderServiceImpl(ReaderRepository readerRepository) {
         this.readerRepository = readerRepository;
     }
-
-    public void save(){
-        Reader reader = new Reader();
-        reader.setCardNumber("PFS1001");
-        reader.setFirstName("Jakub");
-        reader.setLastName("Sawczuk");
-        reader.setActive(true);
-
-        Reader reader2 = new Reader();
-        reader2.setCardNumber("PFS1002");
-        reader2.setFirstName("Kamil");
-        reader2.setLastName("Rybicki");
-        reader2.setActive(true);
-
-        readerRepository.save(reader);
-        readerRepository.save(reader2);
-    }
-
 
     @Override
     public List<ReaderBasicInfo> getAllActiveUsers() {
@@ -112,5 +95,28 @@ public class ReaderServiceImpl implements IReaderService {
             LOGGER.log(Level.SEVERE, e.toString(), e);
         }
         return reader;
+    }
+
+    @Override
+    public List<BookLoansReaderInfo> readerInfoToLoans() {
+        List<Reader> activeReaderList = readerRepository.findByIsActive(true);
+        List<BookLoansReaderInfo> bookLoansReaderInfoList = new ArrayList<>();
+
+        activeReaderList.forEach(reader -> {
+            String displayValue = buildDisplayName(reader);
+            bookLoansReaderInfoList.add(new BookLoansReaderInfo(displayValue, reader.getReaderId()));
+        });
+
+        return bookLoansReaderInfoList;
+    }
+
+    private String buildDisplayName(Reader reader){
+        StringBuilder displayValue = new StringBuilder();
+        return displayValue.append(reader.getFirstName())
+                .append(" ")
+                .append(reader.getLastName())
+                .append(" (")
+                .append(reader.getCardNumber())
+                .append(")").toString();
     }
 }
