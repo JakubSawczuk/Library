@@ -11,7 +11,6 @@ import wat.ai.services.books.dtos.AddBookDTO;
 import wat.ai.services.books.dtos.BookBasicInfo;
 import wat.ai.services.books.dtos.BookDetails;
 import wat.ai.services.books.dtos.BookNL;
-import wat.ai.services.mails.Mail;
 import wat.ai.utils.DateUtils;
 
 import java.sql.Date;
@@ -44,13 +43,6 @@ public class BookServiceImpl implements IBookService {
             BookBasicInfo bookBasicInfo = modelMapper.map(book, BookBasicInfo.class);
             booksBasicInfoList.add(bookBasicInfo);
         });
-
-        Mail mail = new Mail();
-        try {
-           // mail.sentMail("micrus1236@gmail.com", "TestMaila", "TestTresci");
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
 
         return booksBasicInfoList;
     }

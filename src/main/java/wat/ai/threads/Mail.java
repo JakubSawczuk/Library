@@ -1,4 +1,4 @@
-package wat.ai.services.mails;
+package wat.ai.threads;
 
 import javax.mail.Message;
 import javax.mail.MessagingException;
@@ -14,8 +14,13 @@ import java.util.Properties;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-public class Mail {
+public class Mail implements Runnable {
     static final Logger LOGGER = Logger.getLogger(Mail.class.getName());
+
+    String destEmail;
+    String subject;
+    String messageText;
+
 
     private HashMap<String, String> getMailConfig() {
         HashMap propertiesMap = new HashMap();
@@ -71,14 +76,6 @@ public class Mail {
         return messageAndSessionMap;
     }
 
-    public void sentMail(String destEmail, String subject, String messageText) {
-        HashMap<String, String> paramsMap = getMailConfig();
-        HashMap<String, Object> messageAndSessionMap = setupProvider(paramsMap, destEmail, subject, messageText);
-        sent(messageAndSessionMap, paramsMap);
-
-        LOGGER.severe("A mail has been sent to: " + destEmail);
-    }
-
     public void sent(HashMap<String, Object> messageAndSessionMap, HashMap<String, String> paramsMap) {
         Session mailSession = (Session) messageAndSessionMap.get("Session");
         Message msg = (Message) messageAndSessionMap.get("Message");
@@ -92,4 +89,17 @@ public class Mail {
         }
     }
 
+    public Mail(String destEmail, String subject, String messageText) {
+        this.destEmail = destEmail;
+        this.subject = subject;
+        this.messageText = messageText;
+    }
+
+    @Override
+    public void run() {
+        HashMap<String, String> paramsMap = getMailConfig();
+        HashMap<String, Object> messageAndSessionMap = setupProvider(paramsMap, destEmail, subject, messageText);
+        sent(messageAndSessionMap, paramsMap);
+        LOGGER.severe("A mail has been sent to: " + destEmail);
+    }
 }

@@ -9,9 +9,11 @@ import wat.ai.repositories.BookCopyRepository;
 import wat.ai.repositories.BookLoansRepository;
 import wat.ai.services.bookloans.dtos.AddBookLoanDTO;
 import wat.ai.services.bookloans.dtos.BookLoanDetails;
+import wat.ai.threads.Mail;
 
 import java.sql.Date;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 @Service
@@ -36,6 +38,9 @@ public class BookLoanServiceImpl implements IBookLoanService {
 
         bookCopyRepository.save(bookCopy);
         bookLoansRepository.save(bookLoans);
+
+        Runnable mail = new Mail("micrus1236@gmail.com", "TEST", "TEST");
+        new Thread(mail).start();
     }
 
     @Override
@@ -48,6 +53,9 @@ public class BookLoanServiceImpl implements IBookLoanService {
     public void changeStatus(int bookLoanId) {
         BookLoans bookLoans = bookLoansRepository.findByBookLoanId(bookLoanId);
         bookLoans.setStatus("RETURNED");
+        bookLoans.setActualDueDate(new java.sql.Date(Calendar.getInstance().getTime().getTime()));
+        BookCopy bookCopy = bookCopyRepository.findByBookCopyId(bookLoans.getBookCopy().getBookCopyId()).get(0);
+        bookCopy.setAvailable(true);
 
         bookLoansRepository.save(bookLoans);
     }
