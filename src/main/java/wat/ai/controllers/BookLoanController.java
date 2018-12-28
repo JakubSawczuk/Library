@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import wat.ai.services.bookloans.BookLoanServiceImpl;
-import wat.ai.services.bookloans.dtos.BookLoanDetails;
+import wat.ai.services.bookloans.dtos.AddBookLoanDTO;
 
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -22,9 +22,9 @@ public class BookLoanController {
     BookLoanServiceImpl bookLoanService;
 
     @PostMapping
-    public ResponseEntity createBookLoan(@RequestBody BookLoanDetails bookLoanDetails) {
+    public ResponseEntity createBookLoan(@RequestBody AddBookLoanDTO addBookLoanDTO) {
         try {
-            bookLoanService.addBookLoan(bookLoanDetails);
+            bookLoanService.addBookLoan(addBookLoanDTO);
         } catch (Exception e) {
             LOGGER.log(Level.SEVERE, e.toString(), e);
             return new ResponseEntity<>(HttpStatus.NOT_MODIFIED);

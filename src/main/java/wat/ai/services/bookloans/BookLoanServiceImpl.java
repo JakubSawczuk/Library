@@ -5,7 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import wat.ai.models.BookLoans;
 import wat.ai.repositories.BookLoansRepository;
-import wat.ai.services.bookloans.dtos.BookLoanDetails;
+import wat.ai.services.bookloans.dtos.AddBookLoanDTO;
 
 @Service
 public class BookLoanServiceImpl implements IBookLoanService {
@@ -18,15 +18,11 @@ public class BookLoanServiceImpl implements IBookLoanService {
     }
 
     @Override
-    public BookLoanDetails addBookLoan(BookLoanDetails bookLoanDetails) {
+    public void addBookLoan(AddBookLoanDTO addBookLoanDTO) {
         ModelMapper modelMapper = new ModelMapper();
-        BookLoans bookLoans = modelMapper.map(bookLoanDetails, BookLoans.class);
-        bookLoans.setReaderId(1);
-        bookLoans.setLibrarianId(1);
-        bookLoans.setBookLoanId(1);
+        BookLoans bookLoans = modelMapper.map(addBookLoanDTO, BookLoans.class);
+        bookLoans.setStatus("BORROWED");
 
         bookLoansRepository.save(bookLoans);
-
-        return null;
     }
 }

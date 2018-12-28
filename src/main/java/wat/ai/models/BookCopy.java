@@ -29,7 +29,7 @@ public class BookCopy {
     @JoinColumn(name = "BOOK_ID")
     private Book book;
 
-    public void setBookId(int bookId){
+    public void setBookId(int bookId) {
         book.setBookId(bookId);
     }
 
@@ -87,5 +87,10 @@ public class BookCopy {
 
     public void setActive(boolean active) {
         isActive = active;
+    }
+
+    public void setAvailableAndActive(boolean available, boolean active){
+        setActive(active);
+        setAvailable(available);
     }
 }

@@ -1,8 +1,8 @@
 package wat.ai.services.bookloans;
 
-import wat.ai.services.bookloans.dtos.BookLoanDetails;
+import wat.ai.services.bookloans.dtos.AddBookLoanDTO;
 
 public interface IBookLoanService {
 
-    BookLoanDetails addBookLoan(BookLoanDetails bookLoanDetails);
+    void addBookLoan(AddBookLoanDTO addBookLoanDTO);
 }

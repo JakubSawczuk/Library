@@ -6,4 +6,6 @@ import wat.ai.models.BookLoans;
 
 @Repository
 public interface BookLoansRepository  extends CrudRepository<BookLoans, Integer>{
+
+
 }

@@ -1,6 +1,6 @@
 package wat.ai.services.books.dtos;
 
-import java.util.Date;
+import java.sql.Date;
 
 public class BookBasicInfo {
     private int bookId;

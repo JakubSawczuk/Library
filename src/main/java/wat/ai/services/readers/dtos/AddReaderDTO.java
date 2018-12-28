@@ -1,6 +1,6 @@
 package wat.ai.services.readers.dtos;
 
-import java.util.Date;
+import java.sql.Date;
 
 public class AddReaderDTO {
 

@@ -26,7 +26,7 @@ public class BookCopyImpl implements IBookCopy {
 
     @Override
     public void addBookCopy(BookCopyDTO bookCopyDTO) {
-        BookCopy bookCopy = addOrUpdateOrDelete(bookCopyDTO, "add");
+        BookCopy bookCopy = addOrUpdate(bookCopyDTO, "add");
         bookCopyRepository.save(bookCopy);
     }
 
@@ -42,31 +42,30 @@ public class BookCopyImpl implements IBookCopy {
 
     @Override
     public void updateBookCopy(BookCopyDTO bookCopyDTO) {
-        BookCopy bookCopy = addOrUpdateOrDelete(bookCopyDTO, "update");
+        BookCopy bookCopy = addOrUpdate(bookCopyDTO, "update");
         bookCopyRepository.save(bookCopy);
     }
 
     @Override
     public void deleteBookCopy(int bookCopyId) {
         BookCopy bookCopy = bookCopyRepository.findByBookCopyId(bookCopyId).get(0);
-        bookCopy.setActive(false);
-        bookCopy.setAvailable(false);
+        bookCopy.setAvailableAndActive(false, false);
         bookCopyRepository.save(bookCopy);
     }
 
-    public BookCopy addOrUpdateOrDelete(BookCopyDTO bookCopyDTO, String operation) {
+    public BookCopy addOrUpdate(BookCopyDTO bookCopyDTO, String operation) {
         ModelMapper modelMapper = new ModelMapper();
         BookCopy bookCopy = modelMapper.map(bookCopyDTO, BookCopy.class);
-        bookCopy.setActive(true);
         if (operation.equals("add")) {
             bookCopy.setBookCopyId(0);
-            bookCopy.setAvailable(true);
+            bookCopy.setAvailableAndActive(true, true);
+        }else if(operation.equals("update")){
+            bookCopy.setActive(true);
         }
-
         return bookCopy;
     }
 
-    public List<BookCopyDTO> getBookCopies(String findBy, Integer bookId, Integer bookCopyId) {
+    private List<BookCopyDTO> getBookCopies(String findBy, Integer bookId, Integer bookCopyId) {
         List<BookCopyDTO> bookCopyDTOList = new ArrayList<>();
         List<BookCopy> bookCopies = null;
 

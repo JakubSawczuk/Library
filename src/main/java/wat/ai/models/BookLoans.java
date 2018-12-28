@@ -1,7 +1,7 @@
 package wat.ai.models;
 
 import javax.persistence.*;
-import java.sql.Timestamp;
+import java.sql.Date;
 
 @Entity(name = "BOOK_LOANS")
 public class BookLoans {
@@ -12,13 +12,13 @@ public class BookLoans {
     private int bookLoanId;
 
     @Column(name = "LOAN_DATE")
-    private Timestamp loanDate;
+    private Date loanDate;
 
     @Column(name = "PLANNED_DUE_DATE")
-    private Timestamp plannedDueDate;
+    private Date plannedDueDate;
 
     @Column(name = "ACUTAL_DUE_DATE")
-    private Timestamp actualDueDate;
+    private Date actualDueDate;
 
     @Column(name = "STATUS")
     private String status;
@@ -55,27 +55,27 @@ public class BookLoans {
         this.bookLoanId = bookLoanId;
     }
 
-    public Timestamp getLoanDate() {
+    public Date getLoanDate() {
         return loanDate;
     }
 
-    public void setLoanDate(Timestamp loanDate) {
+    public void setLoanDate(Date loanDate) {
         this.loanDate = loanDate;
     }
 
-    public Timestamp getPlannedDueDate() {
+    public Date getPlannedDueDate() {
         return plannedDueDate;
     }
 
-    public void setPlannedDueDate(Timestamp plannedDueDate) {
+    public void setPlannedDueDate(Date plannedDueDate) {
         this.plannedDueDate = plannedDueDate;
     }
 
-    public Timestamp getActualDueDate() {
+    public Date getActualDueDate() {
         return actualDueDate;
     }
 
-    public void setActualDueDate(Timestamp actualDueDate) {
+    public void setActualDueDate(Date actualDueDate) {
         this.actualDueDate = actualDueDate;
     }
 
