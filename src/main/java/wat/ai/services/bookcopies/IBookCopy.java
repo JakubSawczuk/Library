@@ -9,5 +9,5 @@ public interface IBookCopy {
     List<BookCopyDTO> getBookCopiesForBook(int bookId);
     BookCopyDTO getBookCopyDetails(int bookCopyId);
     void updateBookCopy(BookCopyDTO bookCopyDTO);
-    void deleteBookCopy(BookCopyDTO bookCopyDTO);
+    void deleteBookCopy(int bookCopyId);
 }

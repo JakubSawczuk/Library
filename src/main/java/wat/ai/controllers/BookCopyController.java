@@ -33,9 +33,8 @@ public class BookCopyController {
         return new ResponseEntity<>(bookCopyDTOList, HttpStatus.OK);
     }
 
-    @GetMapping(value = "/{id}/{bookCopyId}")
+    @GetMapping(value = "/book-copy/{bookCopyId}")
     public ResponseEntity<BookCopyDTO> shareDetailsBookCopy(
-            @PathVariable("id") int bookId,
             @PathVariable("bookCopyId") int bookCopyId
     ) {
         BookCopyDTO bookCopyDTO = bookCopyService.getBookCopyDetails(bookCopyId);
@@ -64,10 +63,12 @@ public class BookCopyController {
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
-    @DeleteMapping
-    public ResponseEntity deleteBookCopy(@RequestBody BookCopyDTO bookCopyDTO) {
+    @DeleteMapping(value = "/{id}")
+    public ResponseEntity deleteBookCopy(
+            @PathVariable("id") int bookCopyId
+    ) {
         try {
-            bookCopyService.deleteBookCopy(bookCopyDTO);
+            bookCopyService.deleteBookCopy(bookCopyId);
         } catch (Exception e) {
             LOGGER.log(Level.SEVERE, e.toString(), e);
             return new ResponseEntity<>(HttpStatus.NOT_MODIFIED);

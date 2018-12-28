@@ -47,8 +47,10 @@ public class BookCopyImpl implements IBookCopy {
     }
 
     @Override
-    public void deleteBookCopy(BookCopyDTO bookCopyDTO) {
-        BookCopy bookCopy = addOrUpdateOrDelete(bookCopyDTO, "delete");
+    public void deleteBookCopy(int bookCopyId) {
+        BookCopy bookCopy = bookCopyRepository.findByBookCopyId(bookCopyId).get(0);
+        bookCopy.setActive(false);
+        bookCopy.setAvailable(false);
         bookCopyRepository.save(bookCopy);
     }
 
@@ -59,10 +61,8 @@ public class BookCopyImpl implements IBookCopy {
         if (operation.equals("add")) {
             bookCopy.setBookCopyId(0);
             bookCopy.setAvailable(true);
-        } else if (operation.equals("delete")) {
-            bookCopy.setActive(false);
-            bookCopy.setAvailable(false);
         }
+
         return bookCopy;
     }
 
