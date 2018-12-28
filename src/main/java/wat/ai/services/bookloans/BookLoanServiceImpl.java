@@ -8,6 +8,11 @@ import wat.ai.models.BookLoans;
 import wat.ai.repositories.BookCopyRepository;
 import wat.ai.repositories.BookLoansRepository;
 import wat.ai.services.bookloans.dtos.AddBookLoanDTO;
+import wat.ai.services.bookloans.dtos.BookLoanDetails;
+
+import java.sql.Date;
+import java.util.ArrayList;
+import java.util.List;
 
 @Service
 public class BookLoanServiceImpl implements IBookLoanService {
@@ -32,5 +37,27 @@ public class BookLoanServiceImpl implements IBookLoanService {
 
         bookCopyRepository.save(bookCopy);
         bookLoansRepository.save(bookLoans);
+    }
+
+    @Override
+    public List<BookLoanDetails> getAllBookLoansWithDetails(int readerId, String status) {
+        List<Object[]> queryObjects = bookLoansRepository.findByReaderIdAndStatus(readerId, status.toUpperCase());
+        return getAllValuesFromArray(queryObjects);
+    }
+
+    private List<BookLoanDetails> getAllValuesFromArray(List<Object[]> queryObjects){
+        List<BookLoanDetails> bookLoanDetailsList = new ArrayList<>();
+        for (Object[] o : queryObjects) {
+            BookLoanDetails bookLoanDetails = new BookLoanDetails();
+            bookLoanDetails.setBookLoanId((Integer) o[0]);
+            bookLoanDetails.setCopyNumber((String) o[1]);
+            bookLoanDetails.setTitlePl((String) o[2]);
+            bookLoanDetails.setTitleEn((String) o[3]);
+            bookLoanDetails.setLoanDate((Date) o[4]);
+            bookLoanDetails.setLoanDate((Date) o[5]);
+            bookLoanDetails.setStatus((String) o[6]);
+            bookLoanDetailsList.add(bookLoanDetails);
+        }
+        return bookLoanDetailsList;
     }
 }

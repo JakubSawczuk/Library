@@ -1,41 +1,39 @@
 package wat.ai.services.bookloans.dtos;
 
-import wat.ai.models.Librarian;
-import wat.ai.models.Reader;
-
-import java.sql.Timestamp;
+import java.sql.Date;
 
 public class BookLoanDetails {
 
-    private Timestamp loanDate;
-    private Timestamp plannedDueDate;
-    private Timestamp actualDueDate;
+    private int bookLoanId;
+    private Date loanDate;
+    private Date plannedDueDate;
+    private Date actualDueDate;
     private String status;
-    private Reader reader;
-    private Librarian librarian;
-    private int bookId;
+    private String titlePl;
+    private String titleEn;
+    private String copyNumber;
 
-    public Timestamp getLoanDate() {
+    public Date getLoanDate() {
         return loanDate;
     }
 
-    public void setLoanDate(Timestamp loanDate) {
+    public void setLoanDate(Date loanDate) {
         this.loanDate = loanDate;
     }
 
-    public Timestamp getPlannedDueDate() {
+    public Date getPlannedDueDate() {
         return plannedDueDate;
     }
 
-    public void setPlannedDueDate(Timestamp plannedDueDate) {
+    public void setPlannedDueDate(Date plannedDueDate) {
         this.plannedDueDate = plannedDueDate;
     }
 
-    public Timestamp getActualDueDate() {
+    public Date getActualDueDate() {
         return actualDueDate;
     }
 
-    public void setActualDueDate(Timestamp actualDueDate) {
+    public void setActualDueDate(Date actualDueDate) {
         this.actualDueDate = actualDueDate;
     }
 
@@ -47,27 +45,35 @@ public class BookLoanDetails {
         this.status = status;
     }
 
-    public Reader getReader() {
-        return reader;
+    public int getBookLoanId() {
+        return bookLoanId;
     }
 
-    public void setReader(Reader reader) {
-        this.reader = reader;
+    public void setBookLoanId(int bookLoanId) {
+        this.bookLoanId = bookLoanId;
     }
 
-    public Librarian getLibrarian() {
-        return librarian;
+    public String getTitlePl() {
+        return titlePl;
     }
 
-    public void setLibrarian(Librarian librarian) {
-        this.librarian = librarian;
+    public void setTitlePl(String titlePl) {
+        this.titlePl = titlePl;
     }
 
-    public int getBookId() {
-        return bookId;
+    public String getTitleEn() {
+        return titleEn;
     }
 
-    public void setBookId(int bookId) {
-        this.bookId = bookId;
+    public void setTitleEn(String titleEn) {
+        this.titleEn = titleEn;
+    }
+
+    public String getCopyNumber() {
+        return copyNumber;
+    }
+
+    public void setCopyNumber(String copyNumber) {
+        this.copyNumber = copyNumber;
     }
 }

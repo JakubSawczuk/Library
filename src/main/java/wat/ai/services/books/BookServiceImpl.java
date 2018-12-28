@@ -7,11 +7,11 @@ import org.springframework.stereotype.Service;
 import wat.ai.models.Book;
 import wat.ai.nationalelibrary.BooksFromApi;
 import wat.ai.repositories.BookRepository;
-import wat.ai.services.bookloans.Mail;
 import wat.ai.services.books.dtos.AddBookDTO;
 import wat.ai.services.books.dtos.BookBasicInfo;
 import wat.ai.services.books.dtos.BookDetails;
 import wat.ai.services.books.dtos.BookNL;
+import wat.ai.services.mails.Mail;
 import wat.ai.utils.DateUtils;
 
 import java.sql.Date;

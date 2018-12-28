@@ -1,4 +1,4 @@
-package wat.ai.services.bookloans;
+package wat.ai.services.mails;
 
 import javax.mail.Message;
 import javax.mail.MessagingException;
