@@ -54,8 +54,9 @@ public class BookLoanServiceImpl implements IBookLoanService {
             bookLoanDetails.setTitlePl((String) o[2]);
             bookLoanDetails.setTitleEn((String) o[3]);
             bookLoanDetails.setLoanDate((Date) o[4]);
-            bookLoanDetails.setLoanDate((Date) o[5]);
-            bookLoanDetails.setStatus((String) o[6]);
+            bookLoanDetails.setPlannedDueDate((Date) o[5]);
+            bookLoanDetails.setActualDueDate((Date) o[6]);
+            bookLoanDetails.setStatus((String) o[7]);
             bookLoanDetailsList.add(bookLoanDetails);
         }
         return bookLoanDetailsList;
