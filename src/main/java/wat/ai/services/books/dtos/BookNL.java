@@ -1,12 +1,10 @@
 package wat.ai.services.books.dtos;
 
-import java.sql.Date;
-
 public class BookNL {
-    private Date createdDate;
-    private Date updatedDate;
+    private String createdDate;
+    private String updatedDate;
     private String deleted;
-    private Date deletedDate;
+    private String deletedDate;
     private String language;
     private String subject;
     private String subjectPlace;
@@ -30,19 +28,19 @@ public class BookNL {
     private String publicationYear;
     private String languageOfOriginal;
 
-    public Date getCreatedDate() {
+    public String getCreatedDate() {
         return createdDate;
     }
 
-    public void setCreatedDate(Date createdDate) {
+    public void setCreatedDate(String createdDate) {
         this.createdDate = createdDate;
     }
 
-    public Date getUpdatedDate() {
+    public String getUpdatedDate() {
         return updatedDate;
     }
 
-    public void setUpdatedDate(Date updatedDate) {
+    public void setUpdatedDate(String updatedDate) {
         this.updatedDate = updatedDate;
     }
 
@@ -54,11 +52,11 @@ public class BookNL {
         this.deleted = deleted;
     }
 
-    public Date getDeletedDate() {
+    public String getDeletedDate() {
         return deletedDate;
     }
 
-    public void setDeletedDate(Date deletedDate) {
+    public void setDeletedDate(String deletedDate) {
         this.deletedDate = deletedDate;
     }
 

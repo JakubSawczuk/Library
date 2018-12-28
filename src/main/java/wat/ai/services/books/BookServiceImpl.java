@@ -12,9 +12,9 @@ import wat.ai.services.books.dtos.AddBookDTO;
 import wat.ai.services.books.dtos.BookBasicInfo;
 import wat.ai.services.books.dtos.BookDetails;
 import wat.ai.services.books.dtos.BookNL;
+import wat.ai.utils.DateUtils;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
+import java.sql.Date;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -129,11 +129,8 @@ public class BookServiceImpl implements IBookService {
         });
 
         BookDetails bookDetails = modelMapper.map(bookNL, BookDetails.class);
-        try {
-            bookDetails.setEditionDate(new SimpleDateFormat("DD-MM-YYYY").parse("01-01-" + bookNL.getPublicationYear()));
-        } catch (ParseException e) {
-            LOGGER.log(Level.SEVERE, e.toString(), e);
-        }
+        Date sqlDate = DateUtils.stringToDate("01-01"+bookNL.getPublicationYear());
+        bookDetails.setEditionDate(sqlDate);
 
         return bookDetails;
     }
