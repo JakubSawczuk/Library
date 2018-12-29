@@ -11,6 +11,7 @@ import wat.ai.repositories.BookLoanRepository;
 import wat.ai.repositories.ReaderRepository;
 import wat.ai.services.bookloans.dtos.AddBookLoanDTO;
 import wat.ai.services.bookloans.dtos.BookLoanDetails;
+import wat.ai.services.bookloans.enums.BookLoansStatusE;
 import wat.ai.threads.Mail;
 
 import java.sql.Date;
@@ -36,7 +37,7 @@ public class BookLoanServiceImpl implements IBookLoanService {
     public void addBookLoan(AddBookLoanDTO addBookLoanDTO) {
         ModelMapper modelMapper = new ModelMapper();
         BookLoans bookLoans = modelMapper.map(addBookLoanDTO, BookLoans.class);
-        bookLoans.setStatus("BORROWED");
+        bookLoans.setStatus(BookLoansStatusE.BORROWED.getDesc());
         BookCopy bookCopy = bookCopyRepository.findByBookCopyId(addBookLoanDTO.getBookCopyId()).get(0);
         bookCopy.setAvailable(false);
 
@@ -62,7 +63,7 @@ public class BookLoanServiceImpl implements IBookLoanService {
     @Override
     public void changeStatus(int bookLoanId) {
         BookLoans bookLoans = bookLoanRepository.findByBookLoanId(bookLoanId);
-        bookLoans.setStatus("RETURNED");
+        bookLoans.setStatus(BookLoansStatusE.RETURNED.getDesc());
         bookLoans.setActualDueDate(new java.sql.Date(Calendar.getInstance().getTime().getTime()));
         BookCopy bookCopy = bookCopyRepository.findByBookCopyId(bookLoans.getBookCopy().getBookCopyId()).get(0);
         bookCopy.setAvailable(true);
