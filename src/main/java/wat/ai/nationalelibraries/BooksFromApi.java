@@ -1,4 +1,4 @@
-package wat.ai.nationalelibrary;
+package wat.ai.nationalelibraries;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;

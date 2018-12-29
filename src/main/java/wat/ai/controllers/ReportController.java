@@ -11,7 +11,7 @@ import wat.ai.services.reports.ReportServiceImpl;
 
 import javax.servlet.http.HttpServletResponse;
 @RestController
-@RequestMapping("/api/report")
+@RequestMapping("/api/reports")
 public class ReportController {
 
     @Autowired

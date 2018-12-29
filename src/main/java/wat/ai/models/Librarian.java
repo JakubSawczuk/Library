@@ -6,7 +6,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import java.sql.Date;
 
-@Entity(name = "LIBRARIAN")
+@Entity(name = "LIBRARIANS")
 public class Librarian {
 
     @GeneratedValue
@@ -34,9 +34,6 @@ public class Librarian {
 
     @Column(name = "EMAIL")
     private String email;
-
-    @Column(name = "IS_ADMIN")
-    private boolean isAdmin;
 
     @Column(name = "IS_ACTIVE")
     private boolean isActive;
@@ -105,13 +102,6 @@ public class Librarian {
         this.email = email;
     }
 
-    public boolean isAdmin() {
-        return isAdmin;
-    }
-
-    public void setAdmin(boolean admin) {
-        isAdmin = admin;
-    }
 
     public boolean isActive() {
         return isActive;

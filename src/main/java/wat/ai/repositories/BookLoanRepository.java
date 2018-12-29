@@ -9,7 +9,7 @@ import wat.ai.models.BookLoans;
 import java.util.List;
 
 @Repository
-public interface BookLoansRepository extends CrudRepository<BookLoans, Integer> {
+public interface BookLoanRepository extends CrudRepository<BookLoans, Integer> {
 
     @Query("SELECT bl.bookLoanId, bc.copyNumber, b.titlePL, b.titleEn, bl.loanDate, bl.plannedDueDate, bl.actualDueDate, bl.status " +
             "FROM BOOK_LOANS bl JOIN bl.bookCopy bc JOIN bc.book b" +

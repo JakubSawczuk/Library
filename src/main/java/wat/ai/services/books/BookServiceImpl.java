@@ -5,7 +5,7 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import wat.ai.models.Book;
-import wat.ai.nationalelibrary.BooksFromApi;
+import wat.ai.nationalelibraries.BooksFromApi;
 import wat.ai.repositories.BookRepository;
 import wat.ai.services.books.dtos.AddBookDTO;
 import wat.ai.services.books.dtos.BookBasicInfo;

@@ -7,7 +7,7 @@ import wat.ai.models.BookCopy;
 import wat.ai.models.BookLoans;
 import wat.ai.models.Reader;
 import wat.ai.repositories.BookCopyRepository;
-import wat.ai.repositories.BookLoansRepository;
+import wat.ai.repositories.BookLoanRepository;
 import wat.ai.repositories.ReaderRepository;
 import wat.ai.services.bookloans.dtos.AddBookLoanDTO;
 import wat.ai.services.bookloans.dtos.BookLoanDetails;
@@ -21,13 +21,13 @@ import java.util.List;
 @Service
 public class BookLoanServiceImpl implements IBookLoanService {
 
-    private final BookLoansRepository bookLoansRepository;
+    private final BookLoanRepository bookLoanRepository;
     private final BookCopyRepository bookCopyRepository;
     private final ReaderRepository readerRepository;
 
     @Autowired
-    public BookLoanServiceImpl(BookLoansRepository bookLoansRepository, BookCopyRepository bookCopyRepository, ReaderRepository readerRepository) {
-        this.bookLoansRepository = bookLoansRepository;
+    public BookLoanServiceImpl(BookLoanRepository bookLoanRepository, BookCopyRepository bookCopyRepository, ReaderRepository readerRepository) {
+        this.bookLoanRepository = bookLoanRepository;
         this.bookCopyRepository = bookCopyRepository;
         this.readerRepository = readerRepository;
     }
@@ -41,7 +41,7 @@ public class BookLoanServiceImpl implements IBookLoanService {
         bookCopy.setAvailable(false);
 
         bookCopyRepository.save(bookCopy);
-        bookLoansRepository.save(bookLoans);
+        bookLoanRepository.save(bookLoans);
 
         sendMail(bookLoans, bookCopy);
     }
@@ -55,19 +55,19 @@ public class BookLoanServiceImpl implements IBookLoanService {
 
     @Override
     public List<BookLoanDetails> getAllBookLoansWithDetails(int readerId, String status) {
-        List<Object[]> queryObjects = bookLoansRepository.findByReaderIdAndStatus(readerId, status.toUpperCase());
+        List<Object[]> queryObjects = bookLoanRepository.findByReaderIdAndStatus(readerId, status.toUpperCase());
         return getAllValuesFromArray(queryObjects);
     }
 
     @Override
     public void changeStatus(int bookLoanId) {
-        BookLoans bookLoans = bookLoansRepository.findByBookLoanId(bookLoanId);
+        BookLoans bookLoans = bookLoanRepository.findByBookLoanId(bookLoanId);
         bookLoans.setStatus("RETURNED");
         bookLoans.setActualDueDate(new java.sql.Date(Calendar.getInstance().getTime().getTime()));
         BookCopy bookCopy = bookCopyRepository.findByBookCopyId(bookLoans.getBookCopy().getBookCopyId()).get(0);
         bookCopy.setAvailable(true);
 
-        bookLoansRepository.save(bookLoans);
+        bookLoanRepository.save(bookLoans);
     }
 
     private List<BookLoanDetails> getAllValuesFromArray(List<Object[]> queryObjects){

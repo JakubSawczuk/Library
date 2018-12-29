@@ -17,7 +17,7 @@ public class BookLoans {
     @Column(name = "PLANNED_DUE_DATE")
     private Date plannedDueDate;
 
-    @Column(name = "ACUTAL_DUE_DATE")
+    @Column(name = "ACTUAL_DUE_DATE")
     private Date actualDueDate;
 
     @Column(name = "STATUS")

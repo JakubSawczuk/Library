@@ -2,7 +2,7 @@ package wat.ai.models;
 
 import javax.persistence.*;
 
-@Entity(name = "BOOK_COPY")
+@Entity(name = "BOOK_COPIES")
 public class BookCopy {
 
     @GeneratedValue

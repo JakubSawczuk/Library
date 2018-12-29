@@ -14,6 +14,6 @@ public interface BookCopyRepository extends CrudRepository<BookCopy, Integer> {
 
     List<BookCopy> findByBookCopyId(int bookCopyId);
 
-    @Query("SELECT bc FROM BOOK_COPY bc WHERE bc.book.bookId = :bookId AND bc.isActive = TRUE ORDER BY bc.isAvailable DESC")
+    @Query("SELECT bc FROM BOOK_COPIES bc WHERE bc.book.bookId = :bookId AND bc.isActive = TRUE ORDER BY bc.isAvailable DESC")
     List<BookCopy> findByBookId(@Param("bookId") Integer bookId);
 }

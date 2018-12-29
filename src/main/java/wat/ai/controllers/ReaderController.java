@@ -6,7 +6,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import wat.ai.services.readers.ReaderServiceImpl;
 import wat.ai.services.readers.dtos.AddReaderDTO;
-import wat.ai.services.readers.dtos.BookLoansReaderInfo;
+import wat.ai.services.readers.dtos.BookLoanReaderInfo;
 import wat.ai.services.readers.dtos.ReaderBasicInfo;
 import wat.ai.services.readers.dtos.ReaderDetails;
 
@@ -72,8 +72,8 @@ public class ReaderController {
     }
 
     @GetMapping(value = "/lov")
-    public ResponseEntity<List<BookLoansReaderInfo>> shareAllReaderToLoan() {
-        List<BookLoansReaderInfo> bookLoansReaderInfoList = readerService.readerInfoToLoans();
-        return new ResponseEntity<>(bookLoansReaderInfoList, HttpStatus.OK);
+    public ResponseEntity<List<BookLoanReaderInfo>> shareAllReaderToLoan() {
+        List<BookLoanReaderInfo> bookLoanReaderInfoList = readerService.readerInfoToLoans();
+        return new ResponseEntity<>(bookLoanReaderInfoList, HttpStatus.OK);
     }
 }

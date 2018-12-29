@@ -13,7 +13,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 @RestController
-@RequestMapping("/api/bookloans")
+@RequestMapping("/api/book-loans")
 public class BookLoanController {
     private static final Logger LOGGER = Logger.getLogger(BookLoanController.class.getName());
 

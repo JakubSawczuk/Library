@@ -1,11 +1,11 @@
 package wat.ai.services.readers.dtos;
 
-public class BookLoansReaderInfo {
+public class BookLoanReaderInfo {
 
     private String displayValue;
     private int readerId;
 
-    public BookLoansReaderInfo(String displayValue, int readerId) {
+    public BookLoanReaderInfo(String displayValue, int readerId) {
         this.displayValue = displayValue;
         this.readerId = readerId;
     }

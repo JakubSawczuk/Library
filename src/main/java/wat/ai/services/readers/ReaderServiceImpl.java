@@ -7,7 +7,7 @@ import org.springframework.stereotype.Service;
 import wat.ai.models.Reader;
 import wat.ai.repositories.ReaderRepository;
 import wat.ai.services.readers.dtos.AddReaderDTO;
-import wat.ai.services.readers.dtos.BookLoansReaderInfo;
+import wat.ai.services.readers.dtos.BookLoanReaderInfo;
 import wat.ai.services.readers.dtos.ReaderBasicInfo;
 import wat.ai.services.readers.dtos.ReaderDetails;
 
@@ -98,16 +98,16 @@ public class ReaderServiceImpl implements IReaderService {
     }
 
     @Override
-    public List<BookLoansReaderInfo> readerInfoToLoans() {
+    public List<BookLoanReaderInfo> readerInfoToLoans() {
         List<Reader> activeReaderList = readerRepository.findByIsActive(true);
-        List<BookLoansReaderInfo> bookLoansReaderInfoList = new ArrayList<>();
+        List<BookLoanReaderInfo> bookLoanReaderInfoList = new ArrayList<>();
 
         activeReaderList.forEach(reader -> {
             String displayValue = buildDisplayName(reader);
-            bookLoansReaderInfoList.add(new BookLoansReaderInfo(displayValue, reader.getReaderId()));
+            bookLoanReaderInfoList.add(new BookLoanReaderInfo(displayValue, reader.getReaderId()));
         });
 
-        return bookLoansReaderInfoList;
+        return bookLoanReaderInfoList;
     }
 
     private String buildDisplayName(Reader reader){

@@ -6,7 +6,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import java.sql.Date;
 
-@Entity(name = "READER")
+@Entity(name = "READERS")
 public class Reader {
 
     @Column(name = "READER_ID")
