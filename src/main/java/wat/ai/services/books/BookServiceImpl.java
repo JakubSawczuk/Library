@@ -110,8 +110,9 @@ public class BookServiceImpl implements IBookService {
     private BookDetails bookNLToBookDetails(BookNL bookNL) {
         ModelMapper modelMapper = new ModelMapper();
 
+        bookNL.setAuthor(bookNL.getAuthor().substring(0, bookNL.getAuthor().indexOf('(')-1));
         bookNL.setAuthor(bookNL.getAuthor().replaceAll("(,|())", ""));
-        bookNL.setAuthor(bookNL.getAuthor().replaceAll("\\s\\((.*?)\\)", ""));
+        bookNL.setPlaceOfPublication(bookNL.getPlaceOfPublication().substring(0, bookNL.getPlaceOfPublication().indexOf(":")-1));
 
         modelMapper.createTypeMap(BookNL.class, BookDetails.class).addMappings(mapper -> {
             if (bookNL.getLanguage().equals("polski")) mapper.map(BookNL::getTitle, BookDetails::setTitlePL);
