@@ -5,8 +5,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import wat.ai.models.BookCopy;
 import wat.ai.models.BookLoans;
+import wat.ai.models.Reader;
 import wat.ai.repositories.BookCopyRepository;
 import wat.ai.repositories.BookLoansRepository;
+import wat.ai.repositories.ReaderRepository;
 import wat.ai.services.bookloans.dtos.AddBookLoanDTO;
 import wat.ai.services.bookloans.dtos.BookLoanDetails;
 import wat.ai.threads.Mail;
@@ -21,11 +23,13 @@ public class BookLoanServiceImpl implements IBookLoanService {
 
     private final BookLoansRepository bookLoansRepository;
     private final BookCopyRepository bookCopyRepository;
+    private final ReaderRepository readerRepository;
 
     @Autowired
-    public BookLoanServiceImpl(BookLoansRepository bookLoansRepository, BookCopyRepository bookCopyRepository) {
+    public BookLoanServiceImpl(BookLoansRepository bookLoansRepository, BookCopyRepository bookCopyRepository, ReaderRepository readerRepository) {
         this.bookLoansRepository = bookLoansRepository;
         this.bookCopyRepository = bookCopyRepository;
+        this.readerRepository = readerRepository;
     }
 
     @Override
@@ -39,7 +43,13 @@ public class BookLoanServiceImpl implements IBookLoanService {
         bookCopyRepository.save(bookCopy);
         bookLoansRepository.save(bookLoans);
 
-        Runnable mail = new Mail("micrus1236@gmail.com", "TEST", "TEST");
+        sendMail(bookLoans, bookCopy);
+    }
+
+    private void sendMail(BookLoans bookLoans, BookCopy bookCopy){
+        Reader reader = readerRepository.findByReaderId(bookLoans.getReader().getReaderId());
+        Runnable mail = new Mail(reader.getEmail(), Integer.toString(bookLoans.getBookLoanId()), bookCopy.getBook().getTitlePL(),
+                reader.getFirstName() + " " + reader.getLastName(), bookLoans.getPlannedDueDate());
         new Thread(mail).start();
     }
 

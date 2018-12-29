@@ -20,6 +20,8 @@ public class Mail implements Runnable {
     String destEmail;
     String subject;
     String messageText;
+    String name;
+    Date dueData;
 
 
     private HashMap<String, String> getMailConfig() {
@@ -50,7 +52,7 @@ public class Mail implements Runnable {
         return props;
     }
 
-    private HashMap<String, Object> setupProvider(HashMap<String, String> paramsMap, String destinationMail, String subject, String messageText) {
+    private HashMap<String, Object> setupProvider(HashMap<String, String> paramsMap, String destinationMail, String subject, String title, Date dueData, String name) {
         Properties properties = getMailDefaultProperties(paramsMap);
         Message msg = null;
         Session mailSession = null;
@@ -63,9 +65,12 @@ public class Mail implements Runnable {
             msg.setFrom(new InternetAddress(paramsMap.get("from")));
             InternetAddress[] address = {new InternetAddress(destinationMail)};
             msg.setRecipients(Message.RecipientType.TO, address);
-            msg.setSubject(subject);
+            msg.setSubject("Wypożyczenie numer: " + subject + " zostało zatwierdzone");
             msg.setSentDate(new Date());
-            msg.setText(messageText);
+            msg.setText(
+                    "Witaj, " + name + "\n" +
+                            "Została wypożyczona książka: " + title + ". Wypożyczenie obowiązuje do dnia: " + dueData
+            );
 
             messageAndSessionMap.put("Session", mailSession);
             messageAndSessionMap.put("Message", msg);
@@ -89,17 +94,19 @@ public class Mail implements Runnable {
         }
     }
 
-    public Mail(String destEmail, String subject, String messageText) {
+    public Mail(String destEmail, String subject, String messageText, String name, Date dueData) {
         this.destEmail = destEmail;
         this.subject = subject;
         this.messageText = messageText;
+        this.name = name;
+        this.dueData = dueData;
     }
 
     @Override
     public void run() {
         HashMap<String, String> paramsMap = getMailConfig();
-        HashMap<String, Object> messageAndSessionMap = setupProvider(paramsMap, destEmail, subject, messageText);
+        HashMap<String, Object> messageAndSessionMap = setupProvider(paramsMap, destEmail, subject, messageText, dueData, name);
         sent(messageAndSessionMap, paramsMap);
-        LOGGER.severe("A mail has been sent to: " + destEmail);
+        LOGGER.log(Level.INFO, "The mail has been sent to: " + destEmail);
     }
 }
