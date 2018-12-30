@@ -4,7 +4,7 @@ import org.hibernate.exception.ConstraintViolationException;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import wat.ai.models.Book;
+import wat.ai.models.entities.Book;
 import wat.ai.nationalelibraries.BooksFromApi;
 import wat.ai.repositories.BookRepository;
 import wat.ai.services.books.dtos.AddBookDTO;
@@ -110,9 +110,14 @@ public class BookServiceImpl implements IBookService {
     private BookDetails bookNLToBookDetails(BookNL bookNL) {
         ModelMapper modelMapper = new ModelMapper();
 
-        bookNL.setAuthor(bookNL.getAuthor().substring(0, bookNL.getAuthor().indexOf('(')-1));
-        bookNL.setAuthor(bookNL.getAuthor().replaceAll("(,|())", ""));
-        bookNL.setPlaceOfPublication(bookNL.getPlaceOfPublication().substring(0, bookNL.getPlaceOfPublication().indexOf(":")-1));
+        if(bookNL.getAuthor().contains("(")){
+            bookNL.setAuthor(bookNL.getAuthor().substring(0, bookNL.getAuthor().indexOf('(')-1));
+            bookNL.setAuthor(bookNL.getAuthor().replaceAll("(,|())", ""));
+        }
+
+        if(bookNL.getPlaceOfPublication().contains(":")){
+            bookNL.setPlaceOfPublication(bookNL.getPlaceOfPublication().substring(0, bookNL.getPlaceOfPublication().indexOf(":")-1));
+        }
 
         modelMapper.createTypeMap(BookNL.class, BookDetails.class).addMappings(mapper -> {
             if (bookNL.getLanguage().equals("polski")) mapper.map(BookNL::getTitle, BookDetails::setTitlePL);
@@ -127,5 +132,4 @@ public class BookServiceImpl implements IBookService {
 
         return bookDetails;
     }
-
 }

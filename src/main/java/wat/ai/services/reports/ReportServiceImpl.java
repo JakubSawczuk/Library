@@ -24,24 +24,24 @@ public class ReportServiceImpl implements IReportService {
     @Override
     public void generateReport(HttpServletResponse response) {
         try {
-            InputStream jasperStream = this.getClass().getResourceAsStream("/jasper/Simple_Blue.jasper");
+            InputStream jasperStream = this.getClass().getResourceAsStream("/jasper/TopReadersReport.jasper");
             Map<String, Object> params = fillMapParams();
             JasperReport jasperReport = (JasperReport) JRLoader.loadObject(jasperStream);
             Connection connection = DatabaseConnection.getMySQLConnection();
 
             JasperPrint jasperPrint = JasperFillManager.fillReport(jasperReport, params, connection);
 
-            response.setContentType("application/x-pdf");
-            response.setHeader("Content-disposition", "inline; filename=Raport.pdf");
+            response.setContentType("application/pdf");
+            response.setHeader("Content-Disposition", "inline; filename=Raport.pdf");
 
             final OutputStream outStream = response.getOutputStream();
             JasperExportManager.exportReportToPdfStream(jasperPrint, outStream);
-        }catch (Exception e){
+        } catch (Exception e) {
             LOGGER.log(Level.SEVERE, e.toString(), e);
         }
     }
 
-    public  Map<String, Object> fillMapParams(){
+    public Map<String, Object> fillMapParams() {
         Map<String, Object> paramsMap = new HashMap<>();
         return paramsMap;
     }

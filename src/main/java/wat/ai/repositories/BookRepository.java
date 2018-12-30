@@ -2,7 +2,7 @@ package wat.ai.repositories;
 
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
-import wat.ai.models.Book;
+import wat.ai.models.entities.Book;
 
 import java.util.List;
 @Repository

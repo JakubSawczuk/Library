@@ -1,6 +1,6 @@
 package wat.ai.services.readers;
 
-import wat.ai.models.Reader;
+import wat.ai.models.entities.Reader;
 import wat.ai.services.readers.dtos.AddReaderDTO;
 import wat.ai.services.readers.dtos.BookLoanReaderInfo;
 import wat.ai.services.readers.dtos.ReaderBasicInfo;

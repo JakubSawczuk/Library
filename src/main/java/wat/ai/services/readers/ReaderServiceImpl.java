@@ -4,7 +4,7 @@ import org.hibernate.exception.ConstraintViolationException;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import wat.ai.models.Reader;
+import wat.ai.models.entities.Reader;
 import wat.ai.repositories.ReaderRepository;
 import wat.ai.services.readers.dtos.AddReaderDTO;
 import wat.ai.services.readers.dtos.BookLoanReaderInfo;

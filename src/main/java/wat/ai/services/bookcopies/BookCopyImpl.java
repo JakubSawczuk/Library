@@ -3,7 +3,7 @@ package wat.ai.services.bookcopies;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import wat.ai.models.BookCopy;
+import wat.ai.models.entities.BookCopy;
 import wat.ai.repositories.BookCopyRepository;
 import wat.ai.services.bookcopies.dtos.BookCopyDTO;
 

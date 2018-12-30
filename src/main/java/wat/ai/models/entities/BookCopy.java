@@ -1,4 +1,4 @@
-package wat.ai.models;
+package wat.ai.models.entities;
 
 import javax.persistence.*;
 
