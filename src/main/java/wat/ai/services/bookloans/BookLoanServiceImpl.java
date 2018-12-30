@@ -14,7 +14,6 @@ import wat.ai.services.bookloans.dtos.BookLoanDetails;
 import wat.ai.services.bookloans.enums.BookLoansStatusE;
 import wat.ai.threads.Mail;
 
-import java.sql.Date;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
@@ -47,7 +46,7 @@ public class BookLoanServiceImpl implements IBookLoanService {
         sendMail(bookLoans, bookCopy);
     }
 
-    private void sendMail(BookLoans bookLoans, BookCopy bookCopy){
+    private void sendMail(BookLoans bookLoans, BookCopy bookCopy) {
         Reader reader = readerRepository.findByReaderId(bookLoans.getReader().getReaderId());
         Runnable mail = new Mail(reader.getEmail(), Integer.toString(bookLoans.getBookLoanId()), bookCopy.getBook().getTitlePL(),
                 reader.getFirstName() + " " + reader.getLastName(), bookLoans.getPlannedDueDate());
@@ -56,8 +55,20 @@ public class BookLoanServiceImpl implements IBookLoanService {
 
     @Override
     public List<BookLoanDetails> getAllBookLoansWithDetails(int readerId, String status) {
-        List<Object[]> queryObjects = bookLoanRepository.findByReaderIdAndStatus(readerId, status.toUpperCase());
-        return getAllValuesFromArray(queryObjects);
+        ModelMapper modelMapper = new ModelMapper();
+        List<BookLoans> repositoryBookLoans = bookLoanRepository.findByReaderReaderIdAndStatus(readerId, status.toUpperCase());
+        List<BookLoanDetails> bookLoanDetailsList = new ArrayList<>();
+
+        repositoryBookLoans.forEach(bookLoans -> {
+            BookLoanDetails bookLoanDetails = modelMapper.map(bookLoans, BookLoanDetails.class);
+            bookLoanDetails.setTitle(bookLoans.getBookCopy().getBook().getTitlePL());
+            if (bookLoans.getBookCopy().getBook().getTitleEn() != null) {
+                bookLoanDetails.setTitle(bookLoanDetails.getTitle() + " (" + bookLoans.getBookCopy().getBook().getTitleEn() + ")");
+            }
+            bookLoanDetailsList.add(bookLoanDetails);
+        });
+
+        return bookLoanDetailsList;
     }
 
     @Override
@@ -69,24 +80,5 @@ public class BookLoanServiceImpl implements IBookLoanService {
         bookCopy.setAvailable(true);
 
         bookLoanRepository.save(bookLoans);
-    }
-
-    private List<BookLoanDetails> getAllValuesFromArray(List<Object[]> queryObjects){
-        List<BookLoanDetails> bookLoanDetailsList = new ArrayList<>();
-        for (Object[] o : queryObjects) {
-            BookLoanDetails bookLoanDetails = new BookLoanDetails();
-            bookLoanDetails.setBookLoanId((Integer) o[0]);
-            bookLoanDetails.setCopyNumber((String) o[1]);
-            bookLoanDetails.setTitle((String) o[2]);
-            if((String) o[3] != null){
-                bookLoanDetails.setTitle((String) o[2] + " (" + (String) o[3] + ")");
-            }
-            bookLoanDetails.setLoanDate((Date) o[4]);
-            bookLoanDetails.setPlannedDueDate((Date) o[5]);
-            bookLoanDetails.setActualDueDate((Date) o[6]);
-            bookLoanDetails.setStatus((String) o[7]);
-            bookLoanDetailsList.add(bookLoanDetails);
-        }
-        return bookLoanDetailsList;
     }
 }

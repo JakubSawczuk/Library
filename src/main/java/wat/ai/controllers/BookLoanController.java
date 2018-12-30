@@ -38,12 +38,12 @@ public class BookLoanController {
     ) {
         List<BookLoanDetails> bookLoanDetailsList = null;
         try {
-            bookLoanDetailsList = bookLoanService.getAllBookLoansWithDetails(readerId,status);
+            bookLoanDetailsList = bookLoanService.getAllBookLoansWithDetails(readerId, status);
         } catch (Exception e) {
             LOGGER.log(Level.SEVERE, e.toString(), e);
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
-        return new ResponseEntity<>(bookLoanDetailsList,HttpStatus.OK);
+        return new ResponseEntity<>(bookLoanDetailsList, HttpStatus.OK);
     }
 
     @PutMapping(value = "/{bookLoanId}")
