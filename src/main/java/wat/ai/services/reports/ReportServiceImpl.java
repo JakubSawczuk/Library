@@ -25,7 +25,7 @@ public class ReportServiceImpl implements IReportService {
     public void generateReport(HttpServletResponse response) {
         try {
             InputStream jasperStream = this.getClass().getResourceAsStream("/jasper/TopReadersReport.jasper");
-            Map<String, Object> params = fillMapParams();
+            Map<String, Object> params = new HashMap<>();
             JasperReport jasperReport = (JasperReport) JRLoader.loadObject(jasperStream);
             Connection connection = DatabaseConnection.getMySQLConnection();
 
@@ -41,8 +41,4 @@ public class ReportServiceImpl implements IReportService {
         }
     }
 
-    public Map<String, Object> fillMapParams() {
-        Map<String, Object> paramsMap = new HashMap<>();
-        return paramsMap;
-    }
 }
