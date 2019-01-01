@@ -12,23 +12,22 @@ import javax.persistence.Table;
 public class BookLoansByGenre_V {
 
     @Id
-    public String genreName;
+    public String name;
+    public int value;
 
-    public int bookLoansAmount;
-
-    public String getGenreName() {
-        return genreName;
+    public String getName() {
+        return name;
     }
 
-    public void setGenreName(String genreName) {
-        this.genreName = genreName;
+    public void setName(String name) {
+        this.name = name;
     }
 
-    public int getBookLoansAmount() {
-        return bookLoansAmount;
+    public int getValue() {
+        return value;
     }
 
-    public void setBookLoansAmount(int bookLoansAmount) {
-        this.bookLoansAmount = bookLoansAmount;
+    public void setValue(int value) {
+        this.value = value;
     }
 }

@@ -20,6 +20,6 @@ public class GraphServiceImpl implements IGraphService {
 
     @Override
     public List<BookLoansByGenre_V> getBookLoansByGenre_V() {
-        return graphRepository.readAllByGenreNameIsNotNull();
+        return graphRepository.readAllByNameIsNotNull();
     }
 }
