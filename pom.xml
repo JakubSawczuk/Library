@@ -73,9 +73,6 @@
             <version>1.1.1</version>
         </dependency>
 
-
-
-
         <dependency>
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-starter-test</artifactId>
@@ -87,10 +84,21 @@
 			<artifactId>modelmapper</artifactId>
 			<version>2.3.0</version>
 		</dependency>
+
+
 		<dependency>
 			<groupId>org.assertj</groupId>
 			<artifactId>assertj-core</artifactId>
 		</dependency>
+
+		<!-- https://mvnrepository.com/artifact/io.jsonwebtoken/jjwt -->
+		<dependency>
+			<groupId>io.jsonwebtoken</groupId>
+			<artifactId>jjwt</artifactId>
+			<version>0.9.1</version>
+		</dependency>
+
+
 
 	</dependencies>
 
