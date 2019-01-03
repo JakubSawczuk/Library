@@ -1,4 +1,4 @@
-package wat.ai.security2;
+package wat.ai.security2.dtos;
 
 public class UserLogin {
     private String username;
@@ -8,15 +8,7 @@ public class UserLogin {
         return username;
     }
 
-    public void setUsername(String username) {
-        this.username = username;
-    }
-
     public String getPassword() {
         return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
     }
 }

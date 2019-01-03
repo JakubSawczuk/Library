@@ -22,7 +22,7 @@ import java.util.logging.Logger;
 
 @Service
 public class BookServiceImpl implements IBookService {
-    static final Logger LOGGER = Logger.getLogger(BookServiceImpl.class.getName());
+    private static final Logger LOGGER = Logger.getLogger(BookServiceImpl.class.getName());
     private final BookRepository bookRepository;
 
     @Autowired

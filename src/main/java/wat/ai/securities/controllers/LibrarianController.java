@@ -5,16 +5,12 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
 import wat.ai.securities.services.librarians.LibrarianServiceImpl;
 import wat.ai.securities.services.librarians.dtos.LibrarianDetails;
-import wat.ai.security2.UserLogin;
+import wat.ai.security2.dtos.UserLogin;
 
 import java.util.logging.Logger;
 
-@RestController
-@RequestMapping("/api/login")
 public class LibrarianController {
 
     private static final Logger LOGGER = Logger.getLogger(LibrarianController.class.getName());

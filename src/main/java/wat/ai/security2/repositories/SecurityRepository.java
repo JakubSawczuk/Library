@@ -1,4 +1,4 @@
-package wat.ai.security2;
+package wat.ai.security2.repositories;
 
 import org.springframework.data.repository.CrudRepository;
 import wat.ai.models.entities.Librarian;

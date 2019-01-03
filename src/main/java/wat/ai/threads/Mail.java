@@ -56,7 +56,7 @@ public class Mail implements Runnable {
         Properties properties = getMailDefaultProperties(paramsMap);
         Message msg = null;
         Session mailSession = null;
-        HashMap<String, Object> messageAndSessionMap = new HashMap<String, Object>();
+        HashMap<String, Object> messageAndSessionMap = new HashMap<>();
         try {
             java.security.Security.addProvider(new com.sun.net.ssl.internal.ssl.Provider());
             mailSession = Session.getDefaultInstance(properties, null);

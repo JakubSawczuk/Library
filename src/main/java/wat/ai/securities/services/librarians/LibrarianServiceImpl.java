@@ -4,7 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import wat.ai.securities.services.IUserService;
 import wat.ai.securities.services.librarians.dtos.LibrarianDetails;
-import wat.ai.security2.SecurityRepository;
+import wat.ai.security2.repositories.SecurityRepository;
 
 @Service
 public class LibrarianServiceImpl implements IUserService {

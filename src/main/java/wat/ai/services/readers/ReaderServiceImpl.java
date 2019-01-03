@@ -20,7 +20,7 @@ import java.util.logging.Logger;
 
 @Service
 public class ReaderServiceImpl implements IReaderService {
-    static final Logger LOGGER = Logger.getLogger(ReaderServiceImpl.class.getName());
+    private static final Logger LOGGER = Logger.getLogger(ReaderServiceImpl.class.getName());
 
     private final ReaderRepository readerRepository;
 

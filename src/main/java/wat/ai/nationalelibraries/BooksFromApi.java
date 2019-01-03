@@ -26,12 +26,11 @@ public class BooksFromApi {
     Gson gson = new Gson();
 
     private void getArrayJsonFromLink(String path) {
-        String sURL = path;
         URL url;
         HttpURLConnection requestHTTP;
         try {
             LOGGER.log(Level.INFO, "GET: " + path);
-            url = new URL(sURL);
+            url = new URL(path);
             requestHTTP = (HttpURLConnection) url.openConnection();
             requestHTTP.setRequestProperty("Content-Type", "application/x-www-form-urlencoded; charset=utf-8");
             requestHTTP.connect();
