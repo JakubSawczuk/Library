@@ -3,12 +3,14 @@ package wat.ai.security2;
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import wat.ai.models.entities.Librarian;
+import wat.ai.securities.services.librarians.dtos.LibrarianDetails;
 import wat.ai.security2.dtos.UserLogin;
 
 import javax.servlet.FilterChain;
@@ -23,6 +25,7 @@ import java.util.logging.Logger;
 public class LoginFilter extends UsernamePasswordAuthenticationFilter {
     static final private Logger LOGGER = Logger.getLogger(LoginFilter.class.getName());
     private final String secret;
+
 
     @Autowired
     private ObjectMapper objectMapper;
@@ -45,12 +48,23 @@ public class LoginFilter extends UsernamePasswordAuthenticationFilter {
 
     @Override
     protected void successfulAuthentication(HttpServletRequest request, HttpServletResponse response, FilterChain chain, Authentication authResult) throws IOException, ServletException {
+        Librarian user = ((Librarian) authResult.getPrincipal());
         final String token = JWT.create()
-                .withSubject(((Librarian) authResult.getPrincipal()).getUsername())
+                .withSubject(user.getUsername())
                 .withIssuedAt(new Date())
                 .sign(Algorithm.HMAC256(secret.getBytes()));
 
-        response.addHeader("Authorization", String.format("Bearer %s", token));
+//        response.addHeader("Authorization", String.format("Bearer %s", token));
+
+        ModelMapper modelMapper = new ModelMapper();
+
+        LibrarianDetails librarianDetails = modelMapper.map(user, LibrarianDetails.class);
+        librarianDetails.setToken("Bearer " + token);
+
+        response.getWriter().write(objectMapper.writeValueAsString(librarianDetails));
+        response.getWriter().flush();
+        response.getWriter().close();
+
     }
 
     @Override
