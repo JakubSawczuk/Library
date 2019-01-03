@@ -1,14 +1,10 @@
 package wat.ai.securities.services.librarians;
 
-import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import wat.ai.models.entities.Librarian;
-import wat.ai.securities.repositories.SecurityRepository;
 import wat.ai.securities.services.IUserService;
 import wat.ai.securities.services.librarians.dtos.LibrarianDetails;
-
-import java.util.Base64;
+import wat.ai.security2.SecurityRepository;
 
 @Service
 public class LibrarianServiceImpl implements IUserService {
@@ -22,17 +18,17 @@ public class LibrarianServiceImpl implements IUserService {
 
     @Override
     public LibrarianDetails loginLibrarian(String username, String password) {
-        Librarian librarian = securityRepository.findLibrarianByUsernameAndPasswordHash(username, Base64.getEncoder().encodeToString(password.getBytes()));
+//        Librarian librarian = securityRepository.findLibrarianByUsernameAndPasswordHash(username, Base64.getEncoder().encodeToString(password.getBytes()));
 
-        if(librarian == null)
-            return null;
+//        if(librarian == null)
+//            return null;
+//
+//
+//        ModelMapper modelMapper = new ModelMapper();
+//
+//        LibrarianDetails librarianDetails =  modelMapper.map(librarian, LibrarianDetails.class);
+//        librarianDetails.setToken("TESTTOKENA");
 
-
-        ModelMapper modelMapper = new ModelMapper();
-
-        LibrarianDetails librarianDetails =  modelMapper.map(librarian, LibrarianDetails.class);
-        librarianDetails.setToken("TESTTOKENA");
-
-        return librarianDetails;
+        return new LibrarianDetails();
     }
 }

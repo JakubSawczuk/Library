@@ -1,4 +1,4 @@
-package wat.ai.securities.controllers;
+package wat.ai.security2;
 
 public class UserLogin {
     private String username;
