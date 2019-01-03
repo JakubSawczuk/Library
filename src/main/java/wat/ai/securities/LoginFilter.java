@@ -1,4 +1,4 @@
-package wat.ai.security2;
+package wat.ai.securities;
 
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
@@ -10,8 +10,8 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import wat.ai.models.entities.Librarian;
-import wat.ai.securities.services.librarians.dtos.LibrarianDetails;
-import wat.ai.security2.dtos.UserLogin;
+import wat.ai.securities.dtos.LibrarianDetails;
+import wat.ai.securities.dtos.UserLogin;
 
 import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
@@ -53,9 +53,6 @@ public class LoginFilter extends UsernamePasswordAuthenticationFilter {
                 .withSubject(user.getUsername())
                 .withIssuedAt(new Date())
                 .sign(Algorithm.HMAC256(secret.getBytes()));
-
-//        response.addHeader("Authorization", String.format("Bearer %s", token));
-
         ModelMapper modelMapper = new ModelMapper();
 
         LibrarianDetails librarianDetails = modelMapper.map(user, LibrarianDetails.class);

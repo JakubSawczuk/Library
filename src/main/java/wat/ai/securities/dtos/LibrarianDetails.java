@@ -1,4 +1,4 @@
-package wat.ai.securities.services.librarians.dtos;
+package wat.ai.securities.dtos;
 
 public class LibrarianDetails {
 

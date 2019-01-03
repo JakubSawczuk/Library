@@ -1,4 +1,4 @@
-package wat.ai.security2.dtos;
+package wat.ai.securities.dtos;
 
 public class UserLogin {
     private String username;

@@ -1,4 +1,4 @@
-package wat.ai.security2;
+package wat.ai.securities;
 
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
@@ -8,7 +8,7 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.authentication.www.BasicAuthenticationFilter;
 import wat.ai.models.entities.Librarian;
-import wat.ai.security2.repositories.SecurityRepository;
+import wat.ai.securities.repositories.SecurityRepository;
 
 import javax.servlet.FilterChain;
 import javax.servlet.ServletException;

@@ -1,15 +1,16 @@
-package wat.ai.security2.configs;
+package wat.ai.securities.configs;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.core.annotation.Order;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.http.SessionCreationPolicy;
-import wat.ai.security2.AuthProvider;
-import wat.ai.security2.JwtAuthorizer;
-import wat.ai.security2.LoginFilter;
-import wat.ai.security2.repositories.SecurityRepository;
+import wat.ai.securities.AuthProvider;
+import wat.ai.securities.JwtAuthorizer;
+import wat.ai.securities.LoginFilter;
+import wat.ai.securities.repositories.SecurityRepository;
 
 import javax.annotation.PostConstruct;
 import java.io.InputStream;
@@ -18,26 +19,49 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 @Configuration
-public class SecurityConfig extends WebSecurityConfigurerAdapter {
+public class SecurityConfig{
     static final private Logger LOGGER = Logger.getLogger(SecurityConfig.class.getName());
 
     @Autowired
     private SecurityRepository securityRepository;
     private String secret;
 
-    @Override
-    protected void configure(HttpSecurity http) throws Exception {
-        http.cors()
-                .and()
-                .csrf()
-                .disable()
-                .addFilter(loginFilter())
-                .addFilter(jwtAuthorizer())
-                .authorizeRequests()
-                .anyRequest()
-                .authenticated()
-                .and()
-                .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
+
+    @Configuration
+    @Order(1)
+    public class ReportSecurityConfig extends WebSecurityConfigurerAdapter{
+        @Override
+        protected void configure(HttpSecurity http) throws Exception {
+            http.cors()
+                    .and()
+                    .csrf()
+                    .disable()
+                    .antMatcher("/api/reports")
+                    .authorizeRequests()
+                    .anyRequest()
+                    .permitAll()
+                    .and()
+                    .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
+        }
+    }
+
+    @Configuration
+    @Order(2)
+    public class AllSecurityConfig extends WebSecurityConfigurerAdapter{
+        @Override
+        protected void configure(HttpSecurity http) throws Exception {
+            http.cors()
+                    .and()
+                    .csrf()
+                    .disable()
+                    .addFilter(loginFilter())
+                    .addFilter(jwtAuthorizer())
+                    .authorizeRequests()
+                    .anyRequest()
+                    .authenticated()
+                    .and()
+                    .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
+        }
     }
 
     @Bean

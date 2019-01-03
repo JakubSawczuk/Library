@@ -1,4 +1,4 @@
-package wat.ai.security2;
+package wat.ai.securities;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationCredentialsNotFoundException;
@@ -6,7 +6,7 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
-import wat.ai.security2.repositories.SecurityRepository;
+import wat.ai.securities.repositories.SecurityRepository;
 
 import java.util.Base64;
 import java.util.Collections;
